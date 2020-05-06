@@ -1,0 +1,29 @@
+.btn {
+        padding: 1rem 2rem;
+        border: 1px solid var(--red);
+        background-color: var(--red);
+        margin-top: 2rem;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s;
+}
+
+.btn:disabled:hover,
+.btn:disabled {
+        background-color: white;
+        color: gray;
+        cursor: not-allowed;
+}
+
+.btn:focus {
+        outline: none;
+}
+
+.btn:hover {
+        color: var(--red);
+        background-color: white;
+}
+
+.right {
+        margin-left: 73%;
+}

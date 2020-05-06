@@ -1,0 +1,43 @@
+.container {
+        /* margin-top: 10vh; */
+        margin: 10vh 2rem 2rem 2rem;
+}
+
+.heading {
+        font-size: 1.5rem;
+}
+
+.FontAwesomeIcon {
+        color: var(--orange);
+}
+
+.list {
+        display: flex;
+        list-style: none;
+        border-bottom: 1px solid #ddd;
+}
+
+.list li {
+        margin: 2rem 0.5rem 0 0rem;
+}
+
+.renderLink {
+        padding: 1rem 3rem 1rem 0;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        color: #999;
+}
+
+.renderLink:hover {
+        color: var(--red);
+}
+
+.renderLink:focus {
+        outline: none;
+}
+
+.renderLink-active {
+        color: var(--red);
+        border-bottom: 2px solid var(--orange);
+}

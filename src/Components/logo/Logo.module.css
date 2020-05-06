@@ -1,0 +1,9 @@
+.FontAwesome {
+        margin-right: 0.5rem;
+        color: var(--orange);
+}
+
+.siteName {
+        font-size: 2rem;
+        color: var(--red);
+}

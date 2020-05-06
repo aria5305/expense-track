@@ -1,0 +1,28 @@
+.content {
+        width: 100vw;
+        height: 100vh;
+        text-align: center;
+        background-image: linear-gradient(
+                        to right bottom,
+                        rgba(0, 0, 0, 0.5),
+                        rgba(255, 255, 255, 0.3)
+                ),
+                url('../../assets/images/Hero.jpg');
+
+        background-position: center;
+        background-size: cover;
+}
+
+.heading {
+        padding-top: 20rem;
+        color: white;
+        font-size: 3rem;
+        text-align: center;
+}
+
+.subheading {
+        /* padding-top: 25rem; */
+        font-size: 2rem;
+        color: rgba(255, 255, 255, 0.7);
+        text-align: center;
+}

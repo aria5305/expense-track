@@ -1,0 +1,47 @@
+.subheading {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        margin-top: 2rem;
+        padding-bottom: 0.5rem;
+        color: var(--blue-green);
+        border-bottom: 1px solid #ddd;
+}
+
+.heading {
+        margin-top: 1.5rem;
+        color: var(--green);
+}
+
+.container {
+        width: 100%;
+        margin: 0 auto;
+}
+
+.subContainer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+}
+
+.details {
+        margin-top: 2rem;
+}
+
+.FontAwesomeIcon {
+        margin-left: 0.5rem;
+}
+
+.group {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+}
+
+.warning {
+        text-transform: uppercase;
+        font-size: 1rem;
+        color: var(--red);
+        /* font-weight: 700; */
+        /* margin-top: 1rem; */
+}

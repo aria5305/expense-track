@@ -1,0 +1,13 @@
+
+export const SHOW_MODAL = 'SHOW_MODAL';
+export const HIDE_MODAL = 'HIDE_MODAL';
+
+export const AUTH_START = 'AUTH_START'
+export const AUTH_SUCCESS = 'AUTH_SUCCES'
+export const AUTH_FAILED = 'AUTH_FAILED'
+export const AUTH_LOGOUT= 'AUTH_LOGOUT'
+export const SET_AUTH_REDIRECT_PATH = 'SET_AUTH_REDIRECT_PATH'
+
+export const UPDATE_START = 'UPDATE_START'
+export const UPDATE_SUCCESS = 'UPDATE_SUCCESS'
+export const UPDATE_FAILED = 'UPDATE_FAILED'
