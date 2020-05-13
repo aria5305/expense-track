@@ -1,7 +1,7 @@
 import React from 'react';
 
 import classes from './input.module.css';
-
+import Aux from '../../../hoc/Aux'
 const input = ( props ) => {
     let inputElement = null;
     const inputClasses = [classes.InputElement];
@@ -9,6 +9,8 @@ const input = ( props ) => {
     if (props.invalid && props.shouldValidate && props.touched) {
         inputClasses.push(classes.Invalid);
     }
+
+  
 
     switch ( props.elementType ) {
         case ( 'input' ):
@@ -28,6 +30,7 @@ const input = ( props ) => {
         case ( 'select' ):
             inputElement = (
                 <select
+                    style={props.style}
                     className={inputClasses.join(' ')}
                     value={props.value}
                     onChange={props.changed}>
@@ -48,10 +51,12 @@ const input = ( props ) => {
     }
 
     return (
-        <div className={classes.Input}>
+        // <div className={classes.Input}>
+        <Aux>            
             <label className={classes.Label}>{props.label}</label>
             {inputElement}
-        </div>
+        </Aux>
+
     );
 
 };

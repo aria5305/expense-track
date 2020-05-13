@@ -35,7 +35,7 @@ class App extends Component  {
         <Route path='/login' component={Login}/>
         <Route path='/signup'  component={SignUp}/>
         <Route path='/about'  component={About}/>
-        <Route path="/" exact component={MyAccount}/>
+        <Route path="/" exact component={MyApp}/>
       </Switch>
     )
 
@@ -64,6 +64,7 @@ class App extends Component  {
 const mapStateToProps = state => {
   return {
       isAuth:state.auth.isAuth,
+
   
   }
 

@@ -44,3 +44,14 @@
         /* font-weight: 700; */
         /* margin-top: 1rem; */
 }
+
+.containerPath {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+}
+
+.small {
+        font-size: 0.7rem;
+        margin-bottom: -1rem;
+}

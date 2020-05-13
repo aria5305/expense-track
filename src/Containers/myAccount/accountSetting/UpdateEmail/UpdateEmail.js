@@ -6,8 +6,6 @@ import {connect} from 'react-redux';
 import Aux from '../../../../hoc/Aux';
 import Modal from '../../../../Components/UI/modal/modal';
 import * as actions from '../../../../store/action/index';
-import * as firebase from "firebase/app";
-import "firebase/auth";
 import Input from '../../../../Components/UI/input/input';
 import {checkValidity} from '../../../../share/utility';
 import {Redirect} from 'react-router-dom'
@@ -48,8 +46,8 @@ class UpdateEmail extends Component{
                 touched:false,
             },
             },
-           
-         }
+                   
+         }  
     }
 
     inputChangedHandler = (event,controlName) => {
@@ -68,9 +66,15 @@ class UpdateEmail extends Component{
         }
 
         this.setState({controls:updatedControl})
+
     }
 
+    updateHandler= (event) => {
+        event.preventDefault();
+        this.props.onUpdate(this.state.controls.email.value)
+    }
 
+ 
 
 
  
@@ -103,6 +107,8 @@ class UpdateEmail extends Component{
         })
 
 
+        console.log(typeof form, typeof this.state.controls.email.value);
+
         
         let error = null; 
         let authRedirect = null; 
@@ -110,14 +116,16 @@ class UpdateEmail extends Component{
         if(this.props.updateSuccess) {
           
             authRedirect = <Redirect to={this.props.authRedirect} />
+            this.props.sendAuthenticatedEmail();
         }
 
         if(this.props.error) {
             error = this.props.error
         }
-    
 
-        console.log(this.props.method);
+      
+
+    
 
         return (
      
@@ -125,14 +133,19 @@ class UpdateEmail extends Component{
             <div className={classes.subCon}>
                 <h1 className={classes.heading}><FontAwesomeIcon className={classes.FontAwesomeIcon} icon="envelope-square"></FontAwesomeIcon>Update your email</h1>
                 <p>Update your email below.There will be a new verification email sent that you will need to use to verify this new email. </p>
-                {form}
-                {error}
+               
+                <form onSubmit={(event) => event.preventDefault()}>
+                    {form}
+                    {error}
+
                     <Button btnType="right" 
-                    
-                    disabled={
-                        !this.state.controls.password.valid && !this.state.controls.email.valid
-                    }>
-                        Save Emails</Button>
+                        clicked={this.updateHandler}
+                        disabled={
+                            !this.state.controls.password.valid && !this.state.controls.email.valid
+                        }>
+                Save Emails</Button>
+                </form>
+              
             </div>
             {authRedirect}
       
@@ -155,7 +168,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-    //   onUpdate : (email,method) => dispatch(actions.updateMethod(email,method))
+      onUpdate : (email) => dispatch(actions.updateEmail(email)),
+      sendAuthenticatedEmail: () => dispatch(actions.sendAuthenticatedEmail())
     }
 }
 

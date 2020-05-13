@@ -53,10 +53,10 @@ class AccountSetting extends Component {
                         </div>
 
                         <div className={classes.subContainer}>
-                        <div className={classes.details}>
-                        <h5>Change password</h5>
-                        <p>Password must be at least 6 characters long</p>
-                        </div>
+                            <div className={classes.details}>
+                            <h5>Change password</h5>
+                            <p>Password must be at least 6 characters long</p>
+                            </div>
                         <Button id="changePassword" clicked={ (event) => 
                         {
                         this.saveCurrentModal(event)}}>Change password</Button>
@@ -88,11 +88,11 @@ class AccountSetting extends Component {
             
 
                     <div className={classes.container}>
-                   {this.state.currentmodal ==="Deactive" ? <Deactive method="Deactive"/> :null}
+                {this.state.currentmodal ==="Deactive" ? <Deactive method="Deactive"/> :null}
                 {this.state.currentmodal ==="changePassword" ?  <ChangePassword method="changePassword"/> : null}
                 {this.state.currentmodal ==="updateEmail" ? <UpdateEmail method="updateEmail"/> : null}
            
-        }}
+    
                     </div>
             </Modal>
         </Aux>

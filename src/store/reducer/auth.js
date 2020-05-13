@@ -32,6 +32,7 @@ const updateSuccess = (state,action) => {
     return updatedObject(state,{loading:false, updateSuccesful:true})
 }
 
+
 const updateFailed = (state,action) => {
     return updatedObject(state,{
         error:action.error,
@@ -48,7 +49,7 @@ const authSuccess = (state,action) => {
         loading:false,
         localId:action.localId,
         email:action.email,
-        updateSuccesful:false
+       
     })
 }
 
@@ -62,7 +63,10 @@ const authFailed =(state,action) => {
 const authlogout = (state,action) => {
     return updatedObject(state,{
         localId:null,
-        isAuth:false
+        isAuth:false,
+        updateSuccesful:false,
+        updateMethod:null,
+        showModal:false,
     })
 }
 
@@ -71,6 +75,7 @@ const setAuthRedirectPath = (state,action) => {
         authRedirect:action.path
     })
 }
+
 
 
 const reducer = (state = initialState,action) => {

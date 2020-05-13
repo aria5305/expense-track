@@ -8,10 +8,12 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'; 
 import {createStore, applyMiddleware,compose, combineReducers} from 'redux';
 import authReducer from './store/reducer/auth'; 
+import detailsAuth from './store/reducer/details';
 import * as firebase from "firebase/app";
 
 const rootReducer = combineReducers({
-  auth:authReducer
+  auth:authReducer,
+  details:detailsAuth
 })
 const composeEnhancers = process.env.NODE_ENV ==='development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)));

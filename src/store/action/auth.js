@@ -1,5 +1,4 @@
 import * as actionTypes from './actionTypes'; 
-// import axios from 'axios'; 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 
@@ -35,8 +34,14 @@ export const logout = () => {
         // Sign-out successful.
         alert('signed out')
       }).catch(function(error) {
-        alert('can;t signout')
+        alert('cannot signout')
       });
+    return {
+        type:actionTypes.AUTH_LOGOUT,
+    }
+}
+
+export const clearLoginAfterDelete = () => {
     return {
         type:actionTypes.AUTH_LOGOUT,
     }
@@ -68,15 +73,13 @@ export const authFailed = (error) => {
     }
 }
 
-export const updateMethod = (email,method) => {
+export const updateEmail = (email) => {
     return dispatch => {
         
     dispatch(updateStart()); 
-    
-    if(method ==="updateEmail"){
+
     var user = firebase.auth().currentUser;
 
-        if (user != null) {
             user.updateEmail(email).then(() => {
                 
                 alert('You have successfully updated your email, please re-login')
@@ -85,15 +88,46 @@ export const updateMethod = (email,method) => {
 
             
             }).catch(error => {
+                alert(error)
                 dispatch(updateFailed(error))
             });
-            }else{
-                alert('please login')
-                    }
-                }
         }
-    
+
 }
+
+export const updatePassword = (newPassword) => {
+    return dispatch => {
+        
+    dispatch(updateStart()); 
+
+    var user = firebase.auth().currentUser;
+
+    user.updatePassword(newPassword).then(function() {
+      // Update successful.
+        alert('You have successfully updated your password, please re-login')
+        dispatch(updateSuccess());
+        dispatch(logout());
+    }).catch(function(error) {
+      // An error happened.
+        alert(error)
+        dispatch(updateFailed(error))
+    });
+            
+        }
+
+}
+
+export const sendAuthenticatedEmail = () => {
+   
+        var user = firebase.auth().currentUser;
+
+        user.sendEmailVerification().then(function() {
+        // Email sent.
+        }).catch(function(error) {
+        // An error happened.
+        });
+}
+    
 
 
 export const auth = (email,password,isSignup) => {
@@ -141,6 +175,18 @@ export const auth = (email,password,isSignup) => {
     }
 }
 
+export const reagain = (currentPassword) => {
+    var user = firebase.auth().currentUser;
+    var cred = firebase.auth.EmailAuthProvider.credential(
+        user.email, currentPassword);
+    return user.reauthenticateWithCredential(cred)
+    .then( ()=> {
+    })
+    .catch((error)=>{
+        console.log(error)
+    })
+}
+
 
 export const setAuthRedirectPath = (path) => {
     return {
@@ -150,3 +196,18 @@ export const setAuthRedirectPath = (path) => {
 }
 
 ///https://firebase.google.com/docs/auth/web/password-auth#next_steps
+
+
+
+
+
+// var user = firebase.auth().currentUser;
+// var credential;
+
+// // Prompt the user to re-provide their sign-in credentials
+
+// user.reauthenticateWithCredential(credential).then(function() {
+//   // User re-authenticated.
+// }).catch(function(error) {
+//   // An error happened.
+// });

@@ -5,7 +5,14 @@ export {
     auth,
     setAuthRedirectPath,
     logout,
-    updateMethod
-    
- 
+    updateEmail,
+    updatePassword,
+    sendAuthenticatedEmail,
+    clearLoginAfterDelete
 } from './auth'
+
+
+export {
+    addIncome,
+    addExpense
+}from './details'
