@@ -1,4 +1,3 @@
-
 export {
     showModal,
     hideModal,
@@ -14,5 +13,7 @@ export {
 
 export {
     addIncome,
-    addExpense
+    addExpense,
+    // postData,
+    renderData,
 }from './details'

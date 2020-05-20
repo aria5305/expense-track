@@ -5,6 +5,7 @@ const initialState = {
     showModal:false, //for the modal to show
     isAuth:false, //checking if user is authenticated. 
     localId: null,
+    token:null,
     error:null,
     loading:false,
     email:null,
@@ -37,7 +38,6 @@ const updateFailed = (state,action) => {
     return updatedObject(state,{
         error:action.error,
         loading:false
-
     })
 }
 

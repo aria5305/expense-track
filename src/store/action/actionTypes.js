@@ -14,3 +14,10 @@ export const UPDATE_FAILED = 'UPDATE_FAILED'
 
 export const ADD_INCOME = 'ADD_INCOME'
 export const ADD_EXPENSE = 'ADD_EXPENSE'
+export const POST_START = 'POST_START'
+export const POST_SUCCESS = 'POST_SUCCESS'
+export const POST_FAILED = 'POST_FAILED'
+
+export const FETCH_DATA_START = 'FETCH_DATA_START'
+export const FETCH_DATA_SUCCESS = 'FETCH_DATA_SUCCESS'
+export const FETCH_DATA_FAILED = 'FETCH_DATA_FAILED'
