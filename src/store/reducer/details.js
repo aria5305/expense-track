@@ -1,58 +1,76 @@
 import * as actionTypes from '../action/actionTypes'
 import {updatedObject} from '../../share/utility';
-import { faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import * as firebase from "firebase/app";
+import "firebase/database"
 
 
 const initialState = {
-        income:0,
-        expense:0,
-        cashAvailable:0,
-        incomeDetails : [],
-        expenseDetails: []
+        cash: {}, 
+        loading:true,
+        // {2020:{"Jan": {income: 0, expense:0
+        // }}}
+        incomeDetails: {
+            // 2020:{"Jan":[],"Feb":[]},
+            // 2021:{}
+        },
+        expenseDetails: {},
+        error:null,
 }
 
 
 
 const addIncome =(state,action) => {
-    
-    let newIncome = parseInt(state.income)+ parseInt(action.income)
-    
-    let newArr = state.incomeDetails.slice();
-    newArr.push(action.incomeDetails);
 
-    let cash  = newIncome - state.expense
+        return updatedObject(state, {
+            cash:action.income,
+            incomeDetails:action.data
+        })
+}
 
-    return updatedObject(state, {
-       income:newIncome,
-       cashAvailable:cash,
-       incomeDetails:newArr
+const addExpense =(state,action) => {
+        return updatedObject(state, {
+            cash:action.expense,
+            expenseDetails:action.data
+        })
+}
+
+const fetchDataStart = (state,action) => {
+    return updatedObject(state,{
+        loading:true
     })
 }
 
-const addExpense = (state,action) => {
-    let newExpense = parseInt(state.expense)+ parseInt(action.expense)
-    
-    let newArr = state.expenseDetails.slice();
-    newArr.push(action.expenseDetails);
-
-
-    let cash  = state.income - newExpense
+const fetchDataSuccess = (state,action) => {
     return updatedObject(state, {
-       expense:newExpense,
-       cashAvailable:cash,
-       expenseDetails:newArr
+        cash:action.cash, 
+        loading:false,
+        incomeDetails:action.incomeDetails,
+        expenseDetails:action.expenseDetails
     })
 }
+
+const fetchDataFailed = (state,action) => {
+    return updatedObject(state, {
+        error:action.error,
+        loading:false
+    })
+}
+
+
 
 const reducer = (state = initialState,action) => {
 
     switch(action.type){
         case actionTypes.ADD_INCOME: return addIncome(state,action);
         case actionTypes.ADD_EXPENSE: return addExpense(state,action);
+        case actionTypes.FETCH_DATA_START: return fetchDataStart(state,action);
+        case actionTypes.FETCH_DATA_SUCCESS: return fetchDataSuccess(state,action);
+        case actionTypes.FETCH_DATA_FAILED: return fetchDataFailed(state,action);
      
 
     default:return state
     }
 }
+
 
 export default reducer
