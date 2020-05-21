@@ -20,14 +20,14 @@ export const addExpense = (expense,data) => {
     }
 }
 
-const updateStart = () => {
+const postStart = () => {
     return {
         type:actionTypes.POST_START,
         loading:true,
     };
 }
 
-const updateSuccess = () => {
+const postSuccess = () => {
     return {
         type:actionTypes.POST_SUCCESS,
         loading:false
@@ -60,7 +60,7 @@ const fetchSuccess  = (cash,incomeDetails,expenseDetails) => {
 }
 
 
-const updateFailed = (error) => {
+const postFailed = (error) => {
     return {
         type:actionTypes.POST_FAILED,
         error:error,
@@ -69,36 +69,32 @@ const updateFailed = (error) => {
     }
 }
 
-// export const postData = (id,cash,data,type) => {
+export const postData = (id,data,type) => {
   
-// return dispatch => {
-//     dispatch(updateStart)
-//     var newPostKey = firebase.database().ref().child('users').push().key;
 
-//     if(type ==="income"){
+    return dispatch => {
+        dispatch(postStart())
+        var newPostKey = firebase.database().ref().child('users').push().key;
 
-//         let updates = {} 
-//         updates['/users/' + id + '/cash'] = cash
-//         updates['/users/' + id + '/incomeDetails'] = data
-
-//         return firebase.database().ref().update(updates).then(
-//             dispatch(updateSuccess()))
-//             .catch(error => {dispatch(updateFailed(error))})
-
-
-//     }
-//     if(type === "expense"){
-//          let updates = {} 
-//             updates['/users/' + id + '/cash'] = cash
-//             updates['/users/' + id + '/expenseDetails'] = data
-    
-//             return firebase.database().ref().update(updates).then(dispatch(updateSuccess())).catch(error => {dispatch(updateFailed(error))})
-
-//     }
-//     }
+        let updates = {} 
+            updates['/users/' + id + '/cash'] = data[0]
+            if(type ==="income"){
+        
+                updates['/users/' + id + '/incomeDetails'] = data[1]
+            }
+            if(type ==="expense"){
+                updates['/users/' + id + '/expenseDetails'] = data[1]
+            }
+            return firebase.database().ref().update(updates).then( () => {
+                dispatch(postSuccess())
+            })
+            .catch(error => {
+                dispatch(postFailed(error))
+            })
+        }
     
   
-// }
+}
 
 
 

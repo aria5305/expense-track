@@ -14,6 +14,6 @@ export {
 export {
     addIncome,
     addExpense,
-    // postData,
+    postData,
     renderData,
 }from './details'

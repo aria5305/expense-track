@@ -40,6 +40,19 @@ const fetchDataStart = (state,action) => {
     })
 }
 
+const postStart = (state,action) => {
+    return state;
+}
+
+
+const postSuccess = (state,action) => {
+    return state;
+}
+
+const postFailed = (state,action) => {
+    return updatedObject(state,{error:action.error})
+}
+
 const fetchDataSuccess = (state,action) => {
     return updatedObject(state, {
         cash:action.cash, 
@@ -63,9 +76,14 @@ const reducer = (state = initialState,action) => {
     switch(action.type){
         case actionTypes.ADD_INCOME: return addIncome(state,action);
         case actionTypes.ADD_EXPENSE: return addExpense(state,action);
+
         case actionTypes.FETCH_DATA_START: return fetchDataStart(state,action);
         case actionTypes.FETCH_DATA_SUCCESS: return fetchDataSuccess(state,action);
         case actionTypes.FETCH_DATA_FAILED: return fetchDataFailed(state,action);
+
+        case actionTypes.POST_START: return postStart(state,action );
+        case actionTypes.POST_SUCCESS: return postSuccess(state,action); 
+        case actionTypes.POST_FAILED: return postFailed(state,action);
      
 
     default:return state
