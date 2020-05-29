@@ -1,9 +1,10 @@
 import React, {Component} from 'react'; 
 import classes from './myApp.module.css';
 import Details from './Details/Details'
-import Graphs from './Details/Graphs/Graphs';
+import Graphs from './Graphs/Graphs';
 import {connect} from 'react-redux';
-
+import LabelEdit from './LabelEdit/LabelEdit';
+import Aux from '../../hoc/Aux';
 import * as actions from '../../store/action/index';
 class MyApp extends Component{
     constructor(props){
@@ -12,6 +13,7 @@ class MyApp extends Component{
             currentComponent: 'details',
              currentMonth: null,
             currentYear: null,
+            currentMonthIndex:null
         }
     }
 
@@ -26,9 +28,11 @@ class MyApp extends Component{
     
     componentDidMount(){
         let currentMonth = this.MONTHNAMES[new Date().getMonth()]; 
+        let currentMonthIndex = new Date().getMonth() + 1;
+        console.log(currentMonthIndex)
         let currentYear = new Date().getUTCFullYear()
-        console.log(currentYear)
-        this.setState({currentMonth:currentMonth,currentYear:currentYear})
+        // console.log(currentYear)
+        this.setState({currentMonth:currentMonth,currentYear:currentYear,currentMonthIndex:currentMonthIndex})
 
         this.props.onRenderingData()
       
@@ -113,40 +117,46 @@ class MyApp extends Component{
                         
                     {this.state.currentComponent ==="details" ? <li id="details" className={classes.itemActive} onClick={this.renderComponent}>Monthly Overview</li>
                      : <li id="details" className={classes.item} onClick={this.renderComponent}>Monthly Overview</li>}
-                    {this.state.currentComponent ==="spendingGraphs"  ? <li id="spendingGraphs"  className={classes.itemActive} onClick={this.renderComponent}>Spending Graphs</li>
-                     : <li id="spendingGraphs" className={classes.item} onClick={this.renderComponent}>Spending Graphs</li>}
+                    {this.state.currentComponent ==="graphs"  ? <li id="graphs"  className={classes.itemActive} onClick={this.renderComponent}>Graphs</li>
+                     : <li id="graphs" className={classes.item} onClick={this.renderComponent}>Graphs</li>}
 
-                    {this.state.currentComponent ==="incomeGraphs"  ? <li id="incomeGraphs"  className={classes.itemActive} onClick={this.renderComponent}>Income Graphs</li>
-                     : <li id="incomeGraphs" className={classes.item} onClick={this.renderComponent}>Income Graphs</li>}
+                    {this.state.currentComponent ==="label"  ? <li id="label"  className={classes.itemActive} onClick={this.renderComponent}>Label Edit</li>
+                     : <li id="label" className={classes.item} onClick={this.renderComponent}>Manage Labels</li>}
 
-                        {this.state.currentComponent ==="incomeGraphs"  ? <li id="incomeGraphs"  className={classes.itemActive} onClick={this.renderComponent}>Manage your labels</li>
-                     : <li id="incomeGraphs" className={classes.item} onClick={this.renderComponent}>Manage your labels</li>}
-        
+                     
                     </ul>
                 </div>
 
 
                 <div className={classes.right}>
                
-                        <div className={classes.monthContainer}>
+               { this.state.currentComponent ==="label" ? null :
+               
+               (   <Aux><div className={classes.monthContainer}>
                         <div className={classes.arrowLeft} onClick={this.rendermonthBefore}></div>
                         <div className={classes.arrowRight} onClick={this.rendermonthAfter}></div>
                         <h1 className={classes.headingRight}>Available Budget in {this.state.currentMonth} {this.state.currentYear}</h1>
                                 <h2 className={classes.subHeading}>{total}</h2>
-                            </div>
-                                <div className={classes.topContainer}>
+                    </div>
+                    <div className={classes.topContainer}>
                                     <div className={classes.banner + ' ' + classes.red}>Total Expense:<p  className={classes.subHeading_white}>{exp}</p></div>
                                     <div className={classes.banner + ' ' + classes.green}>Total Income:<p className={classes.subHeading_white}>{inc}</p></div>
-                        </div>
+                    </div>
+                    </Aux>
+                        ) 
+                        }
+
            
-                    {/* <Graphs currentYear={this.state.currentYear} 
-                        currentMonth={this.state.currentMonth}
-                    /> */}
+                 
                     {this.state.currentComponent ==="details" ? 
                     <Details currentYear={this.state.currentYear} 
                         currentMonth={this.state.currentMonth}
-                        /> : null}
-                    {/* {this.state.currentComponent ==="graph" ? <Graphs/> : null} */}
+                        /> : null} 
+                    {this.state.currentComponent ==="graphs" ? <Graphs currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
+                        currentMonth={this.state.currentMonth}/> : null}
+
+                    {this.state.currentComponent ==="label" ? <LabelEdit currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
+                        currentMonth={this.state.currentMonth}/> : null}
                 </div>
 
             </div>

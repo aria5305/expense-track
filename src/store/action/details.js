@@ -49,14 +49,36 @@ const fetchFailed = (error) => {
 }
 
 
-const fetchSuccess  = (cash,incomeDetails,expenseDetails) => {
-    return {
-        type:actionTypes.FETCH_DATA_SUCCESS,
-        cash:cash,
-        incomeDetails:incomeDetails,
-        expenseDetails:expenseDetails,
-        loading:false,
-    };
+const fetchSuccess  = (cash,incomeDetails,expenseDetails,labels) => {
+    let label;
+
+
+    if(!labels){
+        label = [  {value:'',displayValue:'Select a label'},
+        {value:'Food',displayValue:'Food'},
+        {value:'Entertainment',displayValue:'Entertainment'},]
+
+        return {
+            type:actionTypes.FETCH_DATA_SUCCESS,
+            cash:cash,
+            incomeDetails:incomeDetails,
+            expenseDetails:expenseDetails,
+            labels:label,
+            loading:false,
+        };
+    }else{
+
+        return {
+            type:actionTypes.FETCH_DATA_SUCCESS,
+            cash:cash,
+            incomeDetails:incomeDetails,
+            expenseDetails:expenseDetails,
+            labels:labels,
+            loading:false,
+        };
+    }
+   
+    
 }
 
 
@@ -65,26 +87,30 @@ const postFailed = (error) => {
         type:actionTypes.POST_FAILED,
         error:error,
         loading:false
-      
     }
 }
 
 export const postData = (id,data,type) => {
-  
 
     return dispatch => {
         dispatch(postStart())
         var newPostKey = firebase.database().ref().child('users').push().key;
 
         let updates = {} 
-            updates['/users/' + id + '/cash'] = data[0]
+            
             if(type ==="income"){
-        
+                updates['/users/' + id + '/cash'] = data[0]
                 updates['/users/' + id + '/incomeDetails'] = data[1]
             }
             if(type ==="expense"){
+                updates['/users/' + id + '/cash'] = data[0]
                 updates['/users/' + id + '/expenseDetails'] = data[1]
             }
+
+            if(type ==="category") {
+                updates['/users/' + id + '/categories'] = data
+            }
+
             return firebase.database().ref().update(updates).then( () => {
                 dispatch(postSuccess())
             })
@@ -95,8 +121,6 @@ export const postData = (id,data,type) => {
     
   
 }
-
-
 
 
 export const renderData = () => {
@@ -111,7 +135,9 @@ export const renderData = () => {
        
             let ca = snapshot.val();
             console.log(ca.cash);
-                dispatch(fetchSuccess(ca.cash, ca.incomeDetails, ca.expenseDetails))
+            console.log(ca)
+                dispatch(fetchSuccess(ca.cash, ca.incomeDetails, ca.expenseDetails,ca.categories));
+            
         }).catch( error => {
             console.log(error)
             dispatch(fetchFailed(error))
@@ -121,4 +147,31 @@ export const renderData = () => {
 
 
 }
+}
+
+export const deleteLabel  = (arr) => {
+
+        // var array = [...arr]; // make a separate copy of the array
+       
+        //    let removeIndex =  array.map( (ar,index) => {
+        //         return ar.value}).indexOf(e.currentTarget.parentElement.firstChild.innerHTML)
+        
+        //         array.splice(removeIndex,1);
+
+            return {
+                type:actionTypes.DELETE_LABEL,
+                array:arr
+            }
+}
+
+export const addLabel = (arr,item) => {
+    var array = [...arr]; // make a separate copy of the array
+       
+        array.push({value:item,displayValue:item}); 
+        console.log(array);
+
+    return {
+        type:actionTypes.ADD_LABEL,
+        array:array
+    }
 }

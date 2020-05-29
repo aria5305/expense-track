@@ -15,6 +15,18 @@ const initialState = {
         },
         expenseDetails: {},
         error:null,
+        labels:[
+              
+        // {value:'',displayValue:'Select a label'},
+        // {value:'income',displayValue:'income'},
+        // {value:'expense',displayValue:'expense'},
+        // {value:'Shopping',displayValue:'Shopping'},
+        // {value:'Food',displayValue:'Food'},
+        // {value:'Transport',displayValue:'Transport'},
+        // {value:'Health & Exercise',displayValue:'Health & Exercise'},
+        // {value:'Gifts',displayValue:'Gifts'},
+        // {value:'Home and Utility',displayValue:'Home and Utility'},
+        ],
 }
 
 
@@ -58,7 +70,8 @@ const fetchDataSuccess = (state,action) => {
         cash:action.cash, 
         loading:false,
         incomeDetails:action.incomeDetails,
-        expenseDetails:action.expenseDetails
+        expenseDetails:action.expenseDetails,
+        labels:action.labels
     })
 }
 
@@ -68,6 +81,22 @@ const fetchDataFailed = (state,action) => {
         loading:false
     })
 }
+
+
+const addLabel = (state,action) => {
+    return updatedObject(state,{
+        labels:action.array
+    })
+}
+
+
+const deleteLabel = (state,action) => {
+    return updatedObject(state,{
+        labels:action.array
+    })
+    
+}
+
 
 
 
@@ -84,6 +113,9 @@ const reducer = (state = initialState,action) => {
         case actionTypes.POST_START: return postStart(state,action );
         case actionTypes.POST_SUCCESS: return postSuccess(state,action); 
         case actionTypes.POST_FAILED: return postFailed(state,action);
+
+        case actionTypes.DELETE_LABEL: return deleteLabel(state,action);
+        case actionTypes.ADD_LABEL: return addLabel(state,action)
      
 
     default:return state

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Aux from '../../../hoc/Aux'
 import classes from './Details.module.css';
 import Input from '../../../Components/UI/input/input';
-import {checkValidity} from '../../../share/utility'
+import {checkValidity, updatedObject} from '../../../share/utility'
 import Button from '../../../Components/UI/button/button'
 import {connect} from 'react-redux';
 import * as actions from '../../../store/action/index';
@@ -51,32 +51,7 @@ class Details extends Component{
                     touched:false,
     
                 },
-                labelSelect:{
-                    elementType:'select',
-                    elementConfig:{
-                        type:'select',
-                     
-                        options:[
-                            {value:'',displayValue:'Select a label'},
-                            {value:'Food',displayValue:'Food'},
-                            {value:'Entertainment',displayValue:'Entertainment'},
-                            {value:'Shopping',displayValue:'Shopping'},
-                            {value:'Transport',displayValue:'Transport'},
-                            {value:'Health & Exercise',displayValue:'Health & Exercise'},
-                            {value:'Gifts',displayValue:'Gifts'},
-                            {value:'Home and Utility',displayValue:'Home and Utility'},
-                            ],
-                      
-                    },
-                    style:{width:'10rem'},
-                    id:'select',
-                    value:'+',
-                    validation:{
-                        required:true,
-                    },
-                    valid:false,
-                    touched:false,
-                },
+              
                 details: {
                  elementType:'input',
                  elementConfig:{
@@ -109,6 +84,7 @@ class Details extends Component{
             // currentMonth: null,
             // currentYear: null,
             loading:true,
+            selectLabel:null,
       
          }  
        
@@ -122,8 +98,13 @@ class Details extends Component{
 
     inputChangedHandler = (event,controlName) => {
 
+        console.log(event.target.value, controlName);
         const updatedControlElement = this.state.controls[controlName];
    
+      if(controlName ==="selectLabel"){
+    
+        this.setState({selectLabel:event.target.value})
+      }else{
 
         const updatedControl = {
             ...this.state.controls, 
@@ -134,9 +115,14 @@ class Details extends Component{
                 touched:true
             }
         }
-
         this.setState({controls:updatedControl})
+    }
 
+    console.log(this.state)
+
+      
+
+            
 
     }
 
@@ -151,6 +137,7 @@ class Details extends Component{
             formElementsObj[key] = this.state.controls[key].value
         }
 
+        formElementsObj.labelSelect = this.state.selectLabel
         
         let  today = new Date();
         const dd = String(today.getDate()).padStart(2, '0');
@@ -176,14 +163,12 @@ class Details extends Component{
                 ...this.state.controls.date,
                 value:today
             },
-            labelSelect:{
-                ...this.state.controls.labelSelect,
-                value:''
-            }
+            
 
         }
 
         this.setState({controls:updatedControl})
+
         console.log(updatedControl.date);
             
 
@@ -191,7 +176,6 @@ class Details extends Component{
             let newArr = this.expenseCalc(formElementsObj.amount,formElementsObj,this.props.currentMonth,this.props.currentYear)
             console.log(newArr)
             this.props.onAddExpense(newArr[0],newArr[1])
-            // this.props.onPostData(this.props.localId,newArr[0],newArr[1],"expense");
             this.props.onPostData("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"expense");
           
            
@@ -201,10 +185,7 @@ class Details extends Component{
            
             this.props.onPostData("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"income");
 
-            
-            // this.props.onPostData(this.props.localId,newArr[0],newArr[1],"income");
-           
-          
+   
             
            
         }
@@ -368,9 +349,8 @@ class Details extends Component{
                 const yyyy = today.getFullYear();
     
                 today = yyyy+ '-' + mm + '-' + dd;
-
-            const updatedControl = {
-                ...this.state.controls, 
+                let updatedControl = {
+               ...this.state.controls,
                 date:{
                     ...updatedControlElement,
                     value:today,
@@ -378,26 +358,26 @@ class Details extends Component{
                         min:yyyy+ '-' + mm + '-01',
                     max: today}
                     
-                }
+                },
+                // labelSelect:{
+                //     ...this.state.controls.labelSelect,
+                //     elementConfig:{
+                //      ...this.state.controls.labelSelect.elementConfig,
+                //         options:this.props.labels,
+                //     }
+                // }
+                // where to update this instead? 
             }
-    
+        
+
+            console.log(updatedControl,"updatedcontrol for state"); 
+
             this.setState({controls:updatedControl})
-            console.log(updatedControl)
-    
+          
+
     
         }
     
-    
-    //     let currentMonth = this.MONTHNAMES[new Date().getMonth()]; 
-    //     let currentYear = new Date().getUTCFullYear()
-    //     console.log(currentYear)
-    //     this.setState({currentMonth:currentMonth,currentYear:currentYear})
-
-    //     this.props.onRenderingData()
-      
-    //   // only need to load from the server once - to save to state
-        
-    // }
 
 
    
@@ -414,6 +394,7 @@ class Details extends Component{
             })
         }
 
+        console.log(formElementsArray);
         let form = formElementsArray.map(formElement => {
 
             
@@ -427,10 +408,7 @@ class Details extends Component{
                     invalid={!formElement.config.valid}
                     shouldValidate={formElement.config.validation}
                     touched={formElement.config.touched}
-                    style={formElement.config.style}
-                   
-                   
-                  
+                    style={formElement.config.style} 
                 />
 
             )
@@ -439,13 +417,15 @@ class Details extends Component{
         let expenseList = null; 
         let incomeList = null;
 
+       
+       
         if(this.props.incomeDetails){
             if(this.props.incomeDetails[this.props.currentYear]){
                 if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
                 incomeList = (
                     this.props.incomeDetails[this.props.currentYear][this.props.currentMonth].map((inc,id) => {
                 
-                        return <li key={id}><p>{inc.details}</p><p>${inc.amount}</p></li>
+                        return <li key={id}><p>{inc.details}<span className={classes.labelName}>Labels: </span><span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
                     })
                 )
                 }
@@ -459,8 +439,8 @@ class Details extends Component{
             if( this.props.expenseDetails[this.props.currentYear]){
                 if( this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
                             expenseList = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth].map((exp,id) => {
-            
-                            return <li key={id}><p>{exp.details}</p><p>${exp.amount}</p></li>
+                                
+                            return <li key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p></li>
                 })
             
             }
@@ -479,6 +459,11 @@ class Details extends Component{
                     <div className={classes.mediumContainer}>
                         <form className={classes.form}>
                             {form}
+                            <Input 
+                                elementType="select"
+                                elementConfig={{"type":"select",options:this.props.labels}}
+                                style={{margin:".5rem",width:"15rem"}}
+                                changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
                             <Button btnType="small" style={{margin:"1rem"}} 
                             disabled={(!this.state.controls.amount.valid)} 
                             clicked={this.recordDetails}>Add</Button>
@@ -514,6 +499,8 @@ const mapStateToProps = state => {
         expenseDetails:state.details.expenseDetails,
         localId:state.auth.localId,
         loading:state.details.loading,
+        labels:state.details.labels
+
       
     }
 }

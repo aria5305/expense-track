@@ -1,0 +1,72 @@
+.container {
+        display: flex;
+        height: auto;
+        background-color: rgba(249, 84, 107, 0.7);
+        margin: 1rem;
+        padding: 1rem 2rem;
+        justify-content: space-between;
+}
+
+.inner {
+        /* border: 1px solid red; */
+        width: 100%;
+}
+
+.labelList {
+        list-style: none;
+        display: flex;
+}
+
+.heading {
+        font-size: 1.5rem;
+        color: white;
+}
+
+.label {
+        color: black;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        padding: 0.2rem 1rem;
+        border: 1px solid gray;
+        background-color: #eee;
+        margin: 0 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.cross {
+        background-color: #ccc;
+        margin-left: 0.5rem;
+        width: 1px;
+        height: 1rem;
+        padding: 0.1rem;
+        transform: rotate(45deg);
+        position: relative;
+        transition: all 0.3s;
+        cursor: pointer;
+}
+
+.cross::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: #ccc;
+        width: 1px;
+        height: 1rem;
+        padding: 0.1rem;
+        transform: rotate(-90deg);
+}
+
+.cross:hover::before,
+.cross:hover {
+        background-color: var(--red);
+}
+
+.form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 1rem 0;
+}

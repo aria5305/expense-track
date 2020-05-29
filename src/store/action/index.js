@@ -16,4 +16,6 @@ export {
     addExpense,
     postData,
     renderData,
+    deleteLabel,
+    addLabel,
 }from './details'
