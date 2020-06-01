@@ -90,11 +90,6 @@ class Details extends Component{
        
     }
 
-//     MONTHNAMES = ["January", "February", "March", "April", "May", "June",
-//     "July", "August", "September", "October", "November", "December"
-//   ];
-
-
 
     inputChangedHandler = (event,controlName) => {
 
@@ -176,14 +171,14 @@ class Details extends Component{
             let newArr = this.expenseCalc(formElementsObj.amount,formElementsObj,this.props.currentMonth,this.props.currentYear)
             console.log(newArr)
             this.props.onAddExpense(newArr[0],newArr[1])
-            this.props.onPostData("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"expense");
+            this.props.onPostData(this.props.localId,newArr,"expense");
           
            
         }else if(formElementsObj.select ==="+"){
             let newArr = this.incomeCal(formElementsObj.amount, formElementsObj,this.props.currentMonth,this.props.currentYear)
             this.props.onAddIncome(newArr[0], newArr[1])
            
-            this.props.onPostData("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"income");
+            this.props.onPostData(this.props.localId,newArr,"income");
 
    
             
@@ -379,10 +374,51 @@ class Details extends Component{
         }
     
 
+     
 
    
     render(){
 
+        let exp = 0;
+        let inc = 0;
+        let label = null;
+        // let total =0;
+
+        if(!this.props.loading) {
+           
+            if(this.props.cash){
+                if(this.props.cash[this.props.currentYear] && this.props.cash[this.props.currentYear][this.props.currentMonth]){
+                    if(this.props.cash[this.props.currentYear][this.props.currentMonth].expense){
+                        exp = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].expense).toFixed(2)
+                    }
+                    if(this.props.cash[this.props.currentYear][this.props.currentMonth].income){
+                    inc = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].income).toFixed(2)
+                  
+                    }
+                    // total = (inc - exp).toFixed(2)
+            }else{
+                exp = exp.toFixed(2)
+                inc = inc.toFixed(2)
+                // total = total.toFixed(2);
+            }
+
+        }
+        if(this.state.controls.select.value === "+") {
+            label =   <Input 
+              elementType="select"
+              elementConfig={{"type":"select",options:this.props.labels.income}}
+              style={{margin:".5rem",width:"15rem"}}
+              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+        }
+        else if(this.state.controls.select.value === "-"){
+              label = <Input 
+              elementType="select"
+              elementConfig={{"type":"select",options:this.props.labels.expense}}
+              style={{margin:".5rem",width:"15rem"}}
+              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+          }
+      
+    }
       
         const formElementsArray = []; 
 
@@ -425,7 +461,7 @@ class Details extends Component{
                 incomeList = (
                     this.props.incomeDetails[this.props.currentYear][this.props.currentMonth].map((inc,id) => {
                 
-                        return <li key={id}><p>{inc.details}<span className={classes.labelName}>Labels: </span><span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
+                        return <li key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
                     })
                 )
                 }
@@ -449,21 +485,21 @@ class Details extends Component{
             expenseList= null
         }
 
-    
+ 
+
     
 
 
         return (
             <Aux>
- 
+                    <div className={classes.topContainer}>
+                                    <div className={classes.banner + ' ' + classes.red}>Total Expense:<p  className={classes.subHeading_white}>{exp}</p></div>
+                                    <div className={classes.banner + ' ' + classes.green}>Total Income:<p className={classes.subHeading_white}>{inc}</p></div>
+                    </div>
                     <div className={classes.mediumContainer}>
                         <form className={classes.form}>
                             {form}
-                            <Input 
-                                elementType="select"
-                                elementConfig={{"type":"select",options:this.props.labels}}
-                                style={{margin:".5rem",width:"15rem"}}
-                                changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+                            {label}
                             <Button btnType="small" style={{margin:"1rem"}} 
                             disabled={(!this.state.controls.amount.valid)} 
                             clicked={this.recordDetails}>Add</Button>

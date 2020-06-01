@@ -1,4 +1,5 @@
 .container {
+        /* border: 1px solid red; */
         height: 100%;
 }
 
@@ -9,14 +10,14 @@
         flex-direction: column;
         padding-top: 2rem;
         padding-left: 0.5rem;
-        height: 100vh;
+        height: 100%;
 }
 .right {
         display: flex;
         flex-direction: column;
         border-left: none;
         padding: 0.5rem;
-        padding-top: 3rem;
+        padding-top: 1rem;
         text-align: center;
 }
 
@@ -30,7 +31,7 @@
                 'left right right'
                 'left right right';
         grid-template-columns: 0.3fr 2fr;
-        height: 100vh;
+        height: 100%;
 }
 
 .list {
@@ -123,8 +124,9 @@
 }
 
 .headingRight {
-        font-size: 1.5rem;
-        color: var(--orange);
+        font-size: 3rem;
+        font-weight: 300;
+        color: var(--red);
 }
 
 .subHeading,

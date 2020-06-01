@@ -15,18 +15,17 @@ const initialState = {
         },
         expenseDetails: {},
         error:null,
-        labels:[
+        labels:{ }
               
         // {value:'',displayValue:'Select a label'},
-        // {value:'income',displayValue:'income'},
+        
         // {value:'expense',displayValue:'expense'},
-        // {value:'Shopping',displayValue:'Shopping'},
-        // {value:'Food',displayValue:'Food'},
+   
         // {value:'Transport',displayValue:'Transport'},
         // {value:'Health & Exercise',displayValue:'Health & Exercise'},
         // {value:'Gifts',displayValue:'Gifts'},
         // {value:'Home and Utility',displayValue:'Home and Utility'},
-        ],
+        
 }
 
 
@@ -85,14 +84,14 @@ const fetchDataFailed = (state,action) => {
 
 const addLabel = (state,action) => {
     return updatedObject(state,{
-        labels:action.array
+        labels:action.label
     })
 }
 
 
 const deleteLabel = (state,action) => {
     return updatedObject(state,{
-        labels:action.array
+        labels:action.label
     })
     
 }

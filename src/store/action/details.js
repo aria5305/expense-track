@@ -54,9 +54,10 @@ const fetchSuccess  = (cash,incomeDetails,expenseDetails,labels) => {
 
 
     if(!labels){
-        label = [  {value:'',displayValue:'Select a label'},
-        {value:'Food',displayValue:'Food'},
-        {value:'Entertainment',displayValue:'Entertainment'},]
+        label = {
+        income:[ {value:'income',displayValue:'income'},], 
+        expense:[ {value:'Shopping',displayValue:'Shopping'},
+                  {value:'Food',displayValue:'Food'},]}
 
         return {
             type:actionTypes.FETCH_DATA_SUCCESS,
@@ -129,17 +130,17 @@ export const renderData = () => {
 
     dispatch(fetchStart())
     // let cash
-        // var user = firebase.auth().currentUser;
-        // firebase.database().ref('/users/' + user.uid + '/').once('value').then(snapshot=> {
-        firebase.database().ref('/users/Hbfo28g25xXUCoexgKVi6TPcHhg2/').once('value').then(snapshot=> {
+        var user = firebase.auth().currentUser;
+        firebase.database().ref('/users/' + user.uid + '/').once('value').then(snapshot=> {
+        // firebase.database().ref('/users/Hbfo28g25xXUCoexgKVi6TPcHhg2/').once('value').then(snapshot=> {
        
             let ca = snapshot.val();
-            console.log(ca.cash);
-            console.log(ca)
+            // console.log(ca.cash);
+            // console.log(ca)
                 dispatch(fetchSuccess(ca.cash, ca.incomeDetails, ca.expenseDetails,ca.categories));
             
         }).catch( error => {
-            console.log(error)
+            // console.log(error)
             dispatch(fetchFailed(error))
         })
 
@@ -149,7 +150,7 @@ export const renderData = () => {
 }
 }
 
-export const deleteLabel  = (arr) => {
+export const deleteLabel  = (obj) => {
 
         // var array = [...arr]; // make a separate copy of the array
        
@@ -160,18 +161,30 @@ export const deleteLabel  = (arr) => {
 
             return {
                 type:actionTypes.DELETE_LABEL,
-                array:arr
+                label:obj
             }
 }
 
-export const addLabel = (arr,item) => {
-    var array = [...arr]; // make a separate copy of the array
-       
-        array.push({value:item,displayValue:item}); 
-        console.log(array);
+export const addLabel = (obj,item,type) => {
+    
+    let key = null;
+
+    if(type ==="+"){
+        key  = "income"
+    }else{
+        key = "expense"
+    }
+
+    let newArr = [...obj[key]]; 
+    console.log("newArr:",newArr);
+    newArr.push({value:item,displayValue:item}); 
+    let stateObj = {...obj, [key]:newArr}; // make a separate copy of the obj - for labels   
+
+    console.log("stateObj:",stateObj)
+
 
     return {
         type:actionTypes.ADD_LABEL,
-        array:array
+        label:stateObj
     }
 }

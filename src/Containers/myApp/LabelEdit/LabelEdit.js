@@ -11,7 +11,23 @@ class LabelEdit extends Component{
         super(props)
         this.state= {
             controls:{
-            labels:{
+                select: {
+                    elementType:'select',
+                    elementConfig:{
+                        type:'select',
+                        options:[{value:'+',displayValue:'+'},{value:'-',displayValue:'-'}],
+                      
+                    },
+                    id:'select',
+                    value:'+',
+                    validation:{
+                        required:true,
+                    },
+                    valid:false,
+                    touched:false,
+                    style:{width:'5rem'}
+                },
+                labels:{
                 elementType:'input',
                 elementConfig:{
                     type:'text',
@@ -25,35 +41,88 @@ class LabelEdit extends Component{
                 value:'',
                 valid:false,
                 touched:false,
-                }
-            }
+                },
+               
+            },
+            
         }
     }
 
     buttonPress = (event) => {
         event.preventDefault();
-        this.setState({controls:{labels:{
-            value:''
-        }}})
+         
+        const updatedControl = {
+            ...this.state.controls, 
+            select:{
+                ...this.state.controls.select,
+                value:'',
 
-        this.props.onAddLabels(this.props.labels,this.state.controls.labels.value);
-        let newArr = [...this.props.labels]; 
-        newArr.push({value:this.state.controls.labels.value,displayValue:this.state.controls.labels.value}); 
-        this.props.onPostData('Hbfo28g25xXUCoexgKVi6TPcHhg2',newArr,"category")
+            },
+           labels:{
+               ...this.state.controls.labels,
+               value:'',
+               valid:false,
+               touched:false,
+           }
+
+        }
+
+        this.setState({controls:updatedControl})
+
+        this.props.onAddLabels(this.props.labels,this.state.controls.labels.value, this.state.controls.select.value);
+
+
+        if(this.state.controls.select.value ==="+"){
+            
+            let newArr = [...this.props.labels.income];
+           
+            newArr.push({value:this.state.controls.labels.value,displayValue:this.state.controls.labels.value}); 
+            let stateObj = {...this.props.labels, income:newArr}; // make a separate copy of the obj - for labels   
+        
+            this.props.onPostData(this.props.localId,stateObj,"category")
+
+        }else{
+
+            let newArr = [...this.props.labels.expense];
+        
+            newArr.push({value:this.state.controls.labels.value,displayValue:this.state.controls.labels.value}); 
+            let stateObj = {...this.props.labels, expense:newArr}; // make a separate copy of the obj - for labels   
+        
+           
+            this.props.onPostData(this.props.localId,stateObj,"category")
+
+        }
     }
 
-    delLabelFromDB= (e) => {
+    delLabelFromDB= (e,type) => {
+        let array; 
+        let stateObj;
+        if (type ==="income"){
 
-        var array = [...this.props.labels]; // make a separate copy of the array
-       
-        let removeIndex =  array.map( (ar,index) => {
+            array = [...this.props.labels.income]; // make a separate copy of the array
+            let removeIndex =  array.map( (ar,index) => {
              return ar.value}).indexOf(e.currentTarget.parentElement.firstChild.innerHTML)
      
-        array.splice(removeIndex,1);
+            array.splice(removeIndex,1);
+            stateObj = {...this.props.labels, income:array}; // make a separate copy of the obj - for labels   
+        }else if(type ==="expense"){
 
-        this.props.ondeleteLabel(array);
+            array = [...this.props.labels.expense]; // make a separate copy of the array
+            let removeIndex =  array.map( (ar,index) => {
+             return ar.value}).indexOf(e.currentTarget.parentElement.firstChild.innerHTML)
+     
+            array.splice(removeIndex,1);
+            stateObj = {...this.props.labels, expense:array}; // mak
+        }
+        
+
+        
+        this.props.ondeleteLabel(stateObj);
+        
+        this.props.onPostData(this.props.localId,stateObj,"category");
+
+    
       
-        this.props.onPostData('Hbfo28g25xXUCoexgKVi6TPcHhg2',array,"category");
     }
 
     inputChangedHandler = (event,controlName) => {
@@ -110,39 +179,62 @@ class LabelEdit extends Component{
             )
         })
 
-        let listItems = null; 
+      
+        let listItemsExpense = null; 
+        let listItemsIncome = null;
+        if(!this.props.loading){ 
         if(this.props.labels){
         
-        let newArr=   this.props.labels.slice(1)
+        let newArr=   this.props.labels.income.slice()
           
-        listItems = newArr.map( label => {
+        listItemsIncome = newArr.map( label => {
                     return (
                     
                         <div  key={label.value}  className={classes.label}>
                             <li  key={label.value} value={label.value}>{label.displayValue}</li>
-                            <div className={classes.cross} onClick={(e) => this.delLabelFromDB(e)}></div>
+                            <div className={classes.cross} onClick={(e) => this.delLabelFromDB(e,"income")}></div>
                         </div>
                       
         
                     )
             })
+
+            let eArr=   this.props.labels.expense.slice()
+          
+            listItemsExpense = eArr.map( label => {
+                        return (
+                        
+                            <div  key={label.value}  className={classes.label}>
+                                <li  key={label.value} value={label.value}>{label.displayValue}</li>
+                                <div className={classes.cross} onClick={(e) => this.delLabelFromDB(e,"expense")}></div>
+                            </div>
+                          
+            
+                        )
+                })
         }
+    }
         return (
             <div className={classes.container}>
-
                 <div className={classes.inner}>
                 <h1 className={classes.heading}>Manage your labels</h1>
                     <form className={classes.form} >
                     {form}
                     <Button btnType="small" disabled={(!this.state.controls.labels.valid)} clicked={event => this.buttonPress(event)}>Create new Label</Button>
                    </form>
+
+                   <h2 className={classes.subheading}>Income Lables:</h2>
                     <ul className={classes.labelList}>
                        {/* https://blog.logrocket.com/the-complete-guide-to-building-inline-editable-ui-in-react/ */}
-                            {listItems}
-                        
-                          
+                            {listItemsIncome}
                     </ul>
                    
+
+                    <h2  className={classes.subheading}>Expense Lables:</h2>
+                    <ul className={classes.labelList}>
+                       {/* https://blog.logrocket.com/the-complete-guide-to-building-inline-editable-ui-in-react/ */}
+                            {listItemsExpense}
+                    </ul>
                 </div>
                
             </div>
@@ -163,7 +255,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         ondeleteLabel: (arr) => dispatch(actions.deleteLabel(arr)),
-        onAddLabels:(arr,item) => dispatch(actions.addLabel(arr,item)),
+        onAddLabels:(obj,item,type) => dispatch(actions.addLabel(obj,item,type)),
         onPostData:(id,data,type) => dispatch(actions.postData(id,data,type))
                 
     }

@@ -27,7 +27,7 @@
         /* flex-direction: column; */
         justify-content: space-between;
         align-items: center;
-        margin: 1rem;
+        margin: 0 1rem;
         padding: 0.5rem;
 }
 
@@ -100,9 +100,9 @@
         width: 50%;
         color: white;
         /* padding: 1.5rem; */
-        margin: 0.5rem 1rem;
+        margin: 0rem 1rem;
         /* border: 1px solid blue; */
-        height: 5rem;
+        /* height: 5rem; */
 }
 
 .bottomLeft .heading,
@@ -125,6 +125,7 @@
         border-top: none;
         color: black;
         list-style: none;
+        overflow: scroll;
         margin-bottom: 5rem;
 }
 

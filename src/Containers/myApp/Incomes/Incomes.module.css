@@ -1,0 +1,53 @@
+.Graph {
+        width: 100%;
+        padding: 0 0.5rem;
+        /* border: 1px solid red; */
+}
+
+.Donut {
+        margin: 2rem 0;
+}
+.heading {
+        color: var(--orange);
+        font-weight: 300;
+        font-size: 2rem;
+}
+
+.Flex {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 1.5rem 1rem;
+        background-color: rgba(0, 0, 0, 0.1);
+        margin-top: 1rem;
+}
+
+.listContainer {
+        margin-top: 1rem;
+        border-radius: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.8);
+        width: 50%;
+
+        margin-left: auto;
+}
+ul {
+        list-style: none;
+}
+
+.subheading {
+        color: white;
+        padding: 1rem 0;
+        background-color: rgba(0, 0, 0, 0.7);
+}
+
+.listItem {
+        margin: 1rem auto;
+
+        padding: 1rem 0;
+        width: 70%;
+        background-color: rgba(255, 255, 255, 0.8);
+}
+
+.amount {
+        color: var(--blue-green);
+}

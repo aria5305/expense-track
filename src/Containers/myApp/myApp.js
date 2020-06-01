@@ -1,7 +1,8 @@
 import React, {Component} from 'react'; 
 import classes from './myApp.module.css';
 import Details from './Details/Details'
-import Graphs from './Graphs/Graphs';
+import Expenses from './Expenses/Expenses';
+import Income from './Incomes/Incomes';
 import {connect} from 'react-redux';
 import LabelEdit from './LabelEdit/LabelEdit';
 import Aux from '../../hoc/Aux';
@@ -11,15 +12,21 @@ class MyApp extends Component{
         super(props)
         this.state = {
             currentComponent: 'details',
-             currentMonth: null,
+               currentMonth: null,
             currentYear: null,
             currentMonthIndex:null
+            
+          
         }
     }
-
+    
     MONTHNAMES = ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ];
+
+
+
+
   
     renderComponent = (event) => {
         console.log(event.target.id)
@@ -78,32 +85,13 @@ class MyApp extends Component{
         
 
     }
+
+    
     render(){
 
-        let exp = 0;
-        let inc = 0;
-        let total =0;
-
-        if(!this.props.loading) {
-           
-            if(this.props.cash){
-                if(this.props.cash[this.state.currentYear] && this.props.cash[this.state.currentYear][this.state.currentMonth]){
-                    if(this.props.cash[this.state.currentYear][this.state.currentMonth].expense){
-                        exp = parseInt(this.props.cash[this.state.currentYear][this.state.currentMonth].expense).toFixed(2)
-                    }
-                    if(this.props.cash[this.state.currentYear][this.state.currentMonth].income){
-                    inc = parseInt(this.props.cash[this.state.currentYear][this.state.currentMonth].income).toFixed(2)
-                  
-                    }
-                    total = (inc - exp).toFixed(2)
-            }else{
-                exp = exp.toFixed(2)
-                inc = inc.toFixed(2)
-                total = total.toFixed(2);
-            }
-
-        }
-    }
+     
+    
+     
     
         return (
         <div className={classes.container}>
@@ -115,13 +103,16 @@ class MyApp extends Component{
                     <h2 className={classes.heading}>Tool Bar</h2>
                     <ul className={classes.list}>
                         
-                    {this.state.currentComponent ==="details" ? <li id="details" className={classes.itemActive} onClick={this.renderComponent}>Monthly Overview</li>
-                     : <li id="details" className={classes.item} onClick={this.renderComponent}>Monthly Overview</li>}
-                    {this.state.currentComponent ==="graphs"  ? <li id="graphs"  className={classes.itemActive} onClick={this.renderComponent}>Graphs</li>
-                     : <li id="graphs" className={classes.item} onClick={this.renderComponent}>Graphs</li>}
+                    {this.state.currentComponent ==="details" ? <li id="details" className={classes.itemActive} onClick={this.renderComponent}>Monthly Overview in details </li>
+                     : <li id="details" className={classes.item} onClick={this.renderComponent}>Monthly Overview in details </li>}
+                      {this.state.currentComponent ==="expense" ? <li id="expense" className={classes.itemActive} onClick={this.renderComponent}>Expenses </li>
+                     : <li id="expense" className={classes.item} onClick={this.renderComponent}>Expenses </li>}
+                      {this.state.currentComponent ==="income" ? <li id="income" className={classes.itemActive} onClick={this.renderComponent}>Incomes </li>
+                     : <li id="income" className={classes.item} onClick={this.renderComponent}>Incomes </li>}
+                    
 
-                    {this.state.currentComponent ==="label"  ? <li id="label"  className={classes.itemActive} onClick={this.renderComponent}>Label Edit</li>
-                     : <li id="label" className={classes.item} onClick={this.renderComponent}>Manage Labels</li>}
+                    {this.state.currentComponent ==="label"  ? <li id="label"  className={classes.itemActive} onClick={this.renderComponent}>Manage Labels</li>
+                     : <li id="label" className={classes.item} onClick={this.renderComponent}>Manage Labels </li>}
 
                      
                     </ul>
@@ -129,30 +120,27 @@ class MyApp extends Component{
 
 
                 <div className={classes.right}>
-               
-               { this.state.currentComponent ==="label" ? null :
+                { this.state.currentComponent === "label" ? null :
                
                (   <Aux><div className={classes.monthContainer}>
                         <div className={classes.arrowLeft} onClick={this.rendermonthBefore}></div>
                         <div className={classes.arrowRight} onClick={this.rendermonthAfter}></div>
-                        <h1 className={classes.headingRight}>Available Budget in {this.state.currentMonth} {this.state.currentYear}</h1>
-                                <h2 className={classes.subHeading}>{total}</h2>
+                        <h1 className={classes.headingRight}>{this.state.currentMonth} {this.state.currentYear}</h1>
+                                {/* <h2 className={classes.subHeading}>{total}</h2> */}
                     </div>
-                    <div className={classes.topContainer}>
-                                    <div className={classes.banner + ' ' + classes.red}>Total Expense:<p  className={classes.subHeading_white}>{exp}</p></div>
-                                    <div className={classes.banner + ' ' + classes.green}>Total Income:<p className={classes.subHeading_white}>{inc}</p></div>
-                    </div>
+                   
                     </Aux>
                         ) 
                         }
-
-           
-                 
+               
+        
                     {this.state.currentComponent ==="details" ? 
                     <Details currentYear={this.state.currentYear} 
                         currentMonth={this.state.currentMonth}
                         /> : null} 
-                    {this.state.currentComponent ==="graphs" ? <Graphs currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
+                    {this.state.currentComponent ==="expense" ? <Expenses currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
+                        currentMonth={this.state.currentMonth}/> : null}
+                    {this.state.currentComponent ==="income" ? <Income currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
                         currentMonth={this.state.currentMonth}/> : null}
 
                     {this.state.currentComponent ==="label" ? <LabelEdit currentMonthIndex = {this.state.currentMonthIndex} currentYear={this.state.currentYear} 
