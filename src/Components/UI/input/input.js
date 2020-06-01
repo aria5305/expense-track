@@ -1,5 +1,4 @@
 import React from 'react';
-
 import classes from './input.module.css';
 import Aux from '../../../hoc/Aux'
 const input = ( props ) => {
@@ -15,11 +14,16 @@ const input = ( props ) => {
     switch ( props.elementType ) {
         case ( 'input' ):
             inputElement = <input
+            
+                style={props.style}
                 className={inputClasses.join(' ')}
                 {...props.elementConfig}
                 value={props.value}
                 onChange={props.changed} />;
             break;
+
+   
+
         case ( 'textarea' ):
             inputElement = <textarea
                 className={inputClasses.join(' ')}

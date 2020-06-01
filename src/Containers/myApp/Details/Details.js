@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import Aux from '../../../hoc/Aux'
 import classes from './Details.module.css';
 import Input from '../../../Components/UI/input/input';
-import {checkValidity} from '../../../share/utility'
+import {checkValidity, updatedObject} from '../../../share/utility'
 import Button from '../../../Components/UI/button/button'
 import {connect} from 'react-redux';
 import * as actions from '../../../store/action/index';
@@ -29,7 +29,29 @@ class Details extends Component{
                     },
                     valid:false,
                     touched:false,
+                    style:{width:'5rem'}
                 },
+              
+                date:{
+                    elementType:'input',
+                    elementConfig:{
+                        type:'date',
+                        placeholder:'Pick a date within this month',
+                        min:null,
+                        max:null,
+                    },
+                    id:'date',
+                    value:'',
+                    style:{width:'30rem'},
+                    validation:{
+                        required:true,
+                       
+                    },
+                    valid:false,
+                    touched:false,
+    
+                },
+              
                 details: {
                  elementType:'input',
                  elementConfig:{
@@ -55,29 +77,29 @@ class Details extends Component{
                 },
                 valid:false,
                 touched:false,
-            },
+             },
+            
              
             },
-            currentMonth: null,
-            currentYear: null,
+            // currentMonth: null,
+            // currentYear: null,
             loading:true,
-            tempIncome:0,
-            tempExpense:0
-                   
+            selectLabel:null,
+      
          }  
        
     }
 
-    MONTHNAMES = ["January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December"
-  ];
-
-
 
     inputChangedHandler = (event,controlName) => {
 
+        console.log(event.target.value, controlName);
         const updatedControlElement = this.state.controls[controlName];
    
+      if(controlName ==="selectLabel"){
+    
+        this.setState({selectLabel:event.target.value})
+      }else{
 
         const updatedControl = {
             ...this.state.controls, 
@@ -88,9 +110,14 @@ class Details extends Component{
                 touched:true
             }
         }
-
         this.setState({controls:updatedControl})
+    }
 
+    console.log(this.state)
+
+      
+
+            
 
     }
 
@@ -105,6 +132,16 @@ class Details extends Component{
             formElementsObj[key] = this.state.controls[key].value
         }
 
+        formElementsObj.labelSelect = this.state.selectLabel
+        
+        let  today = new Date();
+        const dd = String(today.getDate()).padStart(2, '0');
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        const yyyy = today.getFullYear();
+
+        today = yyyy+ '-' + mm + '-' + dd;
+
+        
         const updatedControl = {
             ...this.state.controls, 
             amount:{
@@ -116,30 +153,34 @@ class Details extends Component{
             details:{
                 ...this.state.controls.details,
                 value:''
-            }
+            },
+            date:{
+                ...this.state.controls.date,
+                value:today
+            },
+            
+
         }
 
         this.setState({controls:updatedControl})
+
+        console.log(updatedControl.date);
             
 
         if(formElementsObj.select === "-"){
-            let newArr = this.expenseCalc(formElementsObj.amount,formElementsObj,this.state.currentMonth,this.state.currentYear)
+            let newArr = this.expenseCalc(formElementsObj.amount,formElementsObj,this.props.currentMonth,this.props.currentYear)
             console.log(newArr)
             this.props.onAddExpense(newArr[0],newArr[1])
-            // this.props.onPostData(this.props.localId,newArr[0],newArr[1],"expense");
-            this.postToDB("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"expense");
+            this.props.onPostData(this.props.localId,newArr,"expense");
           
            
         }else if(formElementsObj.select ==="+"){
-            let newArr = this.incomeCal(formElementsObj.amount, formElementsObj,this.state.currentMonth,this.state.currentYear)
+            let newArr = this.incomeCal(formElementsObj.amount, formElementsObj,this.props.currentMonth,this.props.currentYear)
             this.props.onAddIncome(newArr[0], newArr[1])
            
-            this.postToDB("Hbfo28g25xXUCoexgKVi6TPcHhg2",newArr,"income");
+            this.props.onPostData(this.props.localId,newArr,"income");
 
-            
-            // this.props.onPostData(this.props.localId,newArr[0],newArr[1],"income");
-           
-          
+   
             
            
         }
@@ -174,28 +215,45 @@ class Details extends Component{
             console.log(expenseDe,"second")
         }  
         
-           
+        let yearObj; 
+        let monthObject
+
+        if(!this.props.expenseDetails ||!this.props.expenseDetails[currentYear] ){
+            monthDetails.push(expenseDetails);
     
+            monthObject = {
+            
+                [currentMonth]:monthDetails
+            }
+        
     
-        if(!this.props.expenseDetails[currentYear] || !this.props.expenseDetails[currentYear][currentMonth]){
-                monthDetails.push(expenseDetails);
+        }else if(!this.props.expenseDetails[currentYear][currentMonth]){
+                
+            monthDetails.push(expenseDetails);
+    
+            monthObject = {
+                ...this.props.expenseDetails[currentYear],
+                [currentMonth]:monthDetails
+            }
+            
+        
                
         }else{
             monthDetails = this.props.expenseDetails[currentYear][currentMonth].slice();
             monthDetails.push(expenseDetails)
-        }
-        
-            let yearObj; 
-            let monthObject = {
+    
+            monthObject = {
                 ...this.props.expenseDetails[currentYear],
                 [currentMonth]:monthDetails
             }
     
-            yearObj = {
-                ...this.props.expenseDetails,
-                [currentYear]:monthObject
-            }
-
+        }
+        
+            
+        yearObj = {
+            ...this.props.expenseDetails,
+            [currentYear]:monthObject
+        }
         
             return [expenseDe,yearObj]
     }
@@ -229,105 +287,138 @@ class Details extends Component{
        
 
 
-    if(!this.props.incomeDetails[currentYear] || !this.props.incomeDetails[currentYear][currentMonth]){
-            monthDetails.push(incomeDetails);
+    let yearObj; 
+    let monthObject
+
+    if(!this.props.incomeDetails ||!this.props.incomeDetails[currentYear] ){
+        monthDetails.push(incomeDetails);
+
+        monthObject = {
+        
+            [currentMonth]:monthDetails
+        }
+    
+
+    }else if(!this.props.incomeDetails[currentYear][currentMonth]){
+            
+        monthDetails.push(incomeDetails);
+
+        monthObject = {
+            ...this.props.incomeDetails[currentYear],
+            [currentMonth]:monthDetails
+        }
+        
+    
            
     }else{
         monthDetails = this.props.incomeDetails[currentYear][currentMonth].slice();
         monthDetails.push(incomeDetails)
-    }
-    
-        let yearObj; 
-        let monthObject = {
+
+        monthObject = {
             ...this.props.incomeDetails[currentYear],
             [currentMonth]:monthDetails
         }
 
-        yearObj = {
-            ...this.props.incomeDetails,
-            [currentYear]:monthObject
-        }
-
+    }
+    
         
-        return [incomeDe,yearObj]        
-         
+    yearObj = {
+        ...this.props.incomeDetails,
+        [currentYear]:monthObject
     }
-
-    rendermonthBefore = () => {
-      
-        let currentMonth = this.state.currentMonth; 
-        let num  = this.MONTHNAMES.indexOf(currentMonth); 
-        console.log(num)
-
-        if(num === 0) {
-            num = 11; 
-            let newYear = this.state.currentYear - 1; 
-            let monthBefore = this.MONTHNAMES[num] 
-            this.setState({currentMonth:monthBefore,currentYear:newYear})
-        }else{
-            num-=1; 
-            let monthBefore = this.MONTHNAMES[num] 
-           this.setState({currentMonth:monthBefore})
-        }
-      
-    }
-
-    rendermonthAfter =() => {
-
-        let currentMonth = this.state.currentMonth; 
-        let num  = this.MONTHNAMES.indexOf(currentMonth); 
-     
-        if(num === 11) {
-            num = 0; 
-            let newYear = this.state.currentYear + 1; 
-            let monthAfter = this.MONTHNAMES[num] 
-            this.setState({currentMonth:monthAfter,currentYear:newYear})
-        }else{
-            num+=1; 
-            let monthAfter = this.MONTHNAMES[num] 
-           this.setState({currentMonth:monthAfter})
-        }
-
-        
-
-    }
+    
+        return [incomeDe,yearObj]
+}
 
 
 
     componentDidMount(){
-        let currentMonth = this.MONTHNAMES[new Date().getMonth()]; 
-        let currentYear = new Date().getUTCFullYear()
-        console.log(currentYear)
-        this.setState({currentMonth:currentMonth,currentYear:currentYear})
         
-        this.props.onRenderingData()
-      
-      // only need to load from the server once - to save to state
-        
-    }
 
-
-    postToDB = (id = "Hbfo28g25xXUCoexgKVi6TPcHhg2",data,type) => {
-        
-      
-        var newPostKey = firebase.database().ref().child('users').push().key;
-
-        let updates = {} 
-        updates['/users/' + id + '/cash'] = data[0]
-        if(type ==="income"){
+            const updatedControlElement = this.state.controls.date;
        
-            updates['/users/' + id + '/incomeDetails'] = data[1]
-        }
-        if(type ==="expense"){
-            updates['/users/' + id + '/expenseDetails'] = data[1]
-        }
+        
+              let  today = new Date();
+                const dd = String(today.getDate()).padStart(2, '0');
+                const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const yyyy = today.getFullYear();
+    
+                today = yyyy+ '-' + mm + '-' + dd;
+                let updatedControl = {
+               ...this.state.controls,
+                date:{
+                    ...updatedControlElement,
+                    value:today,
+                    elementConfig:{...updatedControlElement.elementConfig,
+                        min:yyyy+ '-' + mm + '-01',
+                    max: today}
+                    
+                },
+                // labelSelect:{
+                //     ...this.state.controls.labelSelect,
+                //     elementConfig:{
+                //      ...this.state.controls.labelSelect.elementConfig,
+                //         options:this.props.labels,
+                //     }
+                // }
+                // where to update this instead? 
+            }
+        
 
-        return firebase.database().ref().update(updates).then(
-            alert("you did i "))
-            .catch(error => {alert(error)})
-    }
+            console.log(updatedControl,"updatedcontrol for state"); 
+
+            this.setState({controls:updatedControl})
+          
+
+    
+        }
+    
+
+     
+
+   
     render(){
 
+        let exp = 0;
+        let inc = 0;
+        let label = null;
+        // let total =0;
+
+        if(!this.props.loading) {
+           
+            if(this.props.cash){
+                if(this.props.cash[this.props.currentYear] && this.props.cash[this.props.currentYear][this.props.currentMonth]){
+                    if(this.props.cash[this.props.currentYear][this.props.currentMonth].expense){
+                        exp = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].expense).toFixed(2)
+                    }
+                    if(this.props.cash[this.props.currentYear][this.props.currentMonth].income){
+                    inc = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].income).toFixed(2)
+                  
+                    }
+                    // total = (inc - exp).toFixed(2)
+            }else{
+                exp = exp.toFixed(2)
+                inc = inc.toFixed(2)
+                // total = total.toFixed(2);
+            }
+
+        }
+        if(this.state.controls.select.value === "+") {
+            label =   <Input 
+              elementType="select"
+              elementConfig={{"type":"select",options:this.props.labels.income}}
+              style={{margin:".5rem",width:"15rem"}}
+              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+        }
+        else if(this.state.controls.select.value === "-"){
+              label = <Input 
+              elementType="select"
+              elementConfig={{"type":"select",options:this.props.labels.expense}}
+              style={{margin:".5rem",width:"15rem"}}
+              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+          }
+      
+    }
       
         const formElementsArray = []; 
 
@@ -339,6 +430,7 @@ class Details extends Component{
             })
         }
 
+        console.log(formElementsArray);
         let form = formElementsArray.map(formElement => {
 
             
@@ -352,9 +444,7 @@ class Details extends Component{
                     invalid={!formElement.config.valid}
                     shouldValidate={formElement.config.validation}
                     touched={formElement.config.touched}
-                   
-                   
-                  
+                    style={formElement.config.style} 
                 />
 
             )
@@ -363,13 +453,15 @@ class Details extends Component{
         let expenseList = null; 
         let incomeList = null;
 
+       
+       
         if(this.props.incomeDetails){
-            if(this.props.incomeDetails[this.state.currentYear]){
-                if(this.props.incomeDetails[this.state.currentYear][this.state.currentMonth]){
+            if(this.props.incomeDetails[this.props.currentYear]){
+                if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
                 incomeList = (
-                    this.props.incomeDetails[this.state.currentYear][this.state.currentMonth].map((inc,id) => {
+                    this.props.incomeDetails[this.props.currentYear][this.props.currentMonth].map((inc,id) => {
                 
-                        return <li key={id}><p>{inc.details}</p><p>${inc.amount}</p></li>
+                        return <li key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
                     })
                 )
                 }
@@ -380,11 +472,11 @@ class Details extends Component{
         }
 
         if(this.props.expenseDetails){
-            if( this.props.expenseDetails[this.state.currentYear]){
-                if( this.props.expenseDetails[this.state.currentYear][this.state.currentMonth]){
-                            expenseList = this.props.expenseDetails[this.state.currentYear][this.state.currentMonth].map((exp,id) => {
-            
-                            return <li key={id}><p>{exp.details}</p><p>${exp.amount}</p></li>
+            if( this.props.expenseDetails[this.props.currentYear]){
+                if( this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
+                            expenseList = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth].map((exp,id) => {
+                                
+                            return <li key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p></li>
                 })
             
             }
@@ -393,50 +485,21 @@ class Details extends Component{
             expenseList= null
         }
 
-        let exp = 0;
-        let inc = 0;
-        let total =0;
+ 
 
-        if(!this.props.loading) {
-           
-            if(this.props.cash){
-                if(this.props.cash[this.state.currentYear] && this.props.cash[this.state.currentYear][this.state.currentMonth]){
-                    if(this.props.cash[this.state.currentYear][this.state.currentMonth].expense){
-                        exp = parseInt(this.props.cash[this.state.currentYear][this.state.currentMonth].expense).toFixed(2)
-                    }
-                    if(this.props.cash[this.state.currentYear][this.state.currentMonth].income){
-                    inc = parseInt(this.props.cash[this.state.currentYear][this.state.currentMonth].income).toFixed(2)
-                  
-                    }
-                    total = (inc - exp).toFixed(2)
-            }else{
-                exp = exp.toFixed(2)
-                inc = inc.toFixed(2)
-                total = total.toFixed(2);
-            }
-
-        }
-    }
-    
     
 
 
         return (
             <Aux>
-            <div className={classes.monthContainer}>
-                <div className={classes.arrowLeft} onClick={this.rendermonthBefore}></div>
-                <div className={classes.arrowRight} onClick={this.rendermonthAfter}></div>
-        <h1 className={classes.heading}>Available Budget in {this.state.currentMonth} {this.state.currentYear}</h1>
-                <h2 className={classes.subHeading}>{total}</h2>
-            </div>
-                <div className={classes.topContainer}>
-                    <div className={classes.banner + ' ' + classes.red}>Total Expense:<p  className={classes.subHeading_white}>{exp}</p></div>
-                     <div className={classes.banner + ' ' + classes.green}>Total Income:<p className={classes.subHeading_white}>{inc}</p></div>
-                </div>
-
+                    <div className={classes.topContainer}>
+                                    <div className={classes.banner + ' ' + classes.red}>Total Expense:<p  className={classes.subHeading_white}>{exp}</p></div>
+                                    <div className={classes.banner + ' ' + classes.green}>Total Income:<p className={classes.subHeading_white}>{inc}</p></div>
+                    </div>
                     <div className={classes.mediumContainer}>
                         <form className={classes.form}>
                             {form}
+                            {label}
                             <Button btnType="small" style={{margin:"1rem"}} 
                             disabled={(!this.state.controls.amount.valid)} 
                             clicked={this.recordDetails}>Add</Button>
@@ -472,6 +535,8 @@ const mapStateToProps = state => {
         expenseDetails:state.details.expenseDetails,
         localId:state.auth.localId,
         loading:state.details.loading,
+        labels:state.details.labels
+
       
     }
 }
@@ -480,7 +545,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onAddIncome: (income,data) => dispatch(actions.addIncome(income,data)),
         onAddExpense: (expense,data) => dispatch(actions.addExpense(expense,data)),
-        // onPostData: (id,data) => dispatch(actions.postData(id,data)),
+        onPostData: (id,data,type) => dispatch(actions.postData(id,data,type)),
         onRenderingData: () => dispatch(actions.renderData())
                 
     }

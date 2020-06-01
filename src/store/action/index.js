@@ -14,6 +14,8 @@ export {
 export {
     addIncome,
     addExpense,
-    // postData,
+    postData,
     renderData,
+    deleteLabel,
+    addLabel,
 }from './details'
