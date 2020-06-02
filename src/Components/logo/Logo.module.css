@@ -1,9 +1,15 @@
+.flex {
+        display: flex;
+        align-items: center;
+
+        margin-left: -1rem;
+}
 .FontAwesome {
         margin-right: 0.5rem;
-        color: var(--orange);
+        color: var(--red);
 }
 
 .siteName {
         font-size: 2rem;
-        color: var(--red);
+        color: white;
 }

@@ -5,12 +5,11 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        width: 50vw;
-        flex-flow: row;
 }
-/* 
-@media (min-width: 500px) {
+
+@media (max-width: 700px) {
         .NavigationItems {
-                flex-flow: row;
+                width: 100vw;
+                /* flex-direction: c */
         }
-} */
+}

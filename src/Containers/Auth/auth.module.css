@@ -9,11 +9,30 @@
         justify-content: center;
 }
 
-.form div button {
-        margin: 2rem 1rem;
+.form div {
+        width: 100%;
+        text-align: center;
+        margin: 1rem auto;
+}
+
+.links,
+.links:visited {
+        color: white;
+        margin: 0.5rem;
+}
+
+.links {
+        text-decoration: none;
 }
 
 .FontAwesome {
         font-size: 3rem;
         color: red;
+}
+
+@media (min-width: 800px) {
+        .links,
+        .links:visited {
+                color: var(--red);
+        }
 }

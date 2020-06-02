@@ -1,0 +1,24 @@
+.SideDrawer {
+        position: fixed;
+        top: 7vh;
+        left: 0;
+        width: 100vw;
+        z-index: 200; /*higher than backDrop */
+        background-color: #fff;
+        padding: 3rem 0 0 1.5rem;
+        transition: transform 0.3s ease-out;
+}
+
+@media (min-width: 700px) {
+        .SideDrawer {
+                display: none;
+        }
+}
+
+.Open {
+        transform: translateY(0);
+}
+
+.Closed {
+        transform: translateY(-200%);
+}

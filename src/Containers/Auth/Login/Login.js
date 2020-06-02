@@ -4,7 +4,7 @@ import Auth from '../Auth';
 import * as actions from '../../../store/action/index';
 import {connect} from 'react-redux';
 import Spinner from '../../../Components/UI/spinner/spinner';
-import {NavLink} from 'react-router-dom'
+
 
 //look at Auth page from hamburger builder
 
@@ -62,16 +62,13 @@ class Login extends Component{
              <div className={classes.container}>
                 
                 <div className={classes.form}>
-                    <Auth btnType="Sign in" isSignup={false}>
+                    <Auth isLogin btnText="Sign in" isSignup={false}>
                         <h1 className={classes.formHeading}>
                             Sign into your account
                         </h1>
+                       
                     </Auth>
-                    <div className={classes.container2}>
-                        <NavLink className={classes.links} to='/forgotusername'>Forgot User name</NavLink>
-                        <NavLink className={classes.links} to='/forgotpassword'>Forgot Password</NavLink>
-            
-                    </div>
+                   
                   </div>
                   </div>
           

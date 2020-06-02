@@ -20,7 +20,7 @@ class about extends Component{
     return (
         <Aux>
         <div className={classes.aboutIntro}>
-            <h1>Say goodbye to budgeting books </h1>
+            <h1 className={classes.heading}>Say goodbye to budgeting books </h1>
         </div>
 
         <div className={classes.introContainer}>
@@ -30,7 +30,7 @@ class about extends Component{
            <img className={classes.image } src={image}></img>
             
             <div className={classes.desContainer}>
-                <h3>Repeated “Lorem ipsum"</h3>
+                <h3 className={classes.subheading}>Repeated “Lorem ipsum"</h3>
                 <p className={classes.paragraph}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus, augue nec placerat pharetra, lacus metus pretium neque, sed molestie erat dolor at purus. Nulla sollicitudin enim ut tincidunt euismod. Phasellus interdum tellus at semper lobortis. Nullam lectus dolor, viverra non tempus ac, venenatis sit amet augue. Donec arcu nisi, ultricies vel enim nec, lobortis mattis nunc. Mauris faucibus purus et tortor venenatis, vitae venenatis quam blandit. Curabitur urna elit, gravida sed lorem quis, bibendum congue eros. Morbi vestibulum fringilla rutrum. Ut nulla felis, accumsan a magna in, molestie iaculis felis. Donec vehicula sollicitudin nunc, dictum eleifend turpis mattis a. Phasellus congue aliquam suscipit. Vestibulum a mi neque. Nam maximus a metus nec pretium. Morbi efficitur justo massa, sed blandit velit dapibus vitae.
                 </p>

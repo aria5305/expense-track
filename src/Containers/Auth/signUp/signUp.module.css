@@ -1,53 +1,58 @@
-.container {
-        /* margin-top: 10vh; */
-        margin: 20vh auto 0rem auto;
-        width: 50%;
-        height: 50vh;
-        box-shadow: 0px 5px 5px 5px rgba(109, 109, 109, 0.1);
-        text-align: center;
-        background-image: url('../../../assets/images/kelly-sikkema-xoU52jUVUXA-unsplash.jpg');
-        background-repeat: no-repeat repeat;
-        background-size: 50% 70%;
-        /* background-position: center; */
-}
 .form {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-left: 50%;
-        width: 50%;
         height: 100%;
-        padding-bottom: 2rem;
-        position: relative;
-}
-.container2 {
-        position: absolute;
-        top: 60%;
-        left: 25%;
-        display: flex;
 }
 
-.links {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        text-decoration: none;
-        color: var(--blue-green);
-}
-
-.links:hover {
-        color: var(--green);
-        text-decoration: underline;
-}
 .formHeading {
-        font-size: 2rem;
-        text-align: center;
-        font-size: 2rem;
-        color: var(--red);
-        margin-top: 2rem;
+        color: white;
 }
 
-.hint {
-        font-size: 0.7rem;
-        margin-top: 0.23rem;
+.container {
+        margin: 0 1rem;
+        height: 92vh;
+        background-color: var(--yellow);
+}
+
+@media (min-width: 800px) {
+        .container {
+                /* margin-top: 10vh; */
+                margin: 20vh auto 0rem auto;
+                width: 90%;
+                height: auto;
+                /* height: 50vh; */
+                box-shadow: 0px 5px 5px 5px rgba(109, 109, 109, 0.1);
+                text-align: center;
+                background-image: url('../../../assets/images/kelly-sikkema-xoU52jUVUXA-unsplash.jpg');
+                background-repeat: no-repeat repeat;
+                background-size: 50% 70%;
+                /* background-position: center; */
+        }
+        .form {
+                display: flex;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-left: 50%;
+                width: 50%;
+                height: 100%;
+                padding-bottom: 2rem;
+                position: relative;
+        }
+
+        .formHeading {
+                font-size: 2rem;
+                text-align: center;
+                font-size: 2rem;
+                color: var(--red);
+                margin-top: 4rem;
+        }
+
+        .hint {
+                font-size: 0.7rem;
+                margin-top: 0.23rem;
+        }
 }

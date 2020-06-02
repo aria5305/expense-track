@@ -29,20 +29,11 @@
         margin-left: 73%;
 }
 
-.browse {
-        padding: 0.7rem 1rem;
-        margin: 0.5rem 0.5rem 0 0.5rem;
-        border: none;
-        background-color: grey;
-}
-
-.browse:active,
-.browse:hover {
-        background-color: gray;
-        color: white;
-}
-
 .small {
         margin-top: 0.2rem;
         padding: 0.5rem;
+}
+
+.success {
+        margin: 0 auto;
 }

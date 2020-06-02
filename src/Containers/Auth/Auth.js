@@ -10,7 +10,7 @@ import {connect} from 'react-redux';
 import Aux from '../../hoc/Aux'
 import Spinner from '../../Components/UI/spinner/spinner'
 //look at Auth page from hamburger builder
-
+import {NavLink} from 'react-router-dom'
 
 class Auth extends Component{
     constructor(props){
@@ -152,13 +152,23 @@ class Auth extends Component{
                      {form}
                <div>
 
+       
+    
                    
-               <Button btnType="Success" clicked={this.authHandler}>
-                    {this.props.btnType}
+               <Button className={classes.LoginBTN} clicked={this.authHandler}>
+                    {this.props.btnText}
                 </Button>
 
-
+             
+                {this.props.isLogin ?  
+               <div>
+                        <NavLink className={classes.links} to='/forgotusername'>Forgot User name</NavLink>
+                        <NavLink className={classes.links} to='/forgotpassword'>Forgot Password</NavLink>
+            
+               </div>    
+               : null }
         
+
               
                 </div>
                 </form>
