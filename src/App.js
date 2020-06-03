@@ -9,22 +9,21 @@ import Logout from './Containers/Auth/logout/logout';
 import MyAccount from './Containers/myAccount/myAccount';
 import MyApp from './Containers/myApp/myApp';
 import Login from './Containers/Auth/Login/Login'
-
 import Auth from './Containers/Auth/Auth';
 import {connect} from 'react-redux';
 import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 
-import { faTrash,faWallet,faUserPlus, 
-  faPlaneDeparture,faFrog,faCogs,faList ,faMoneyBillAlt,faPiggyBank,faTags,
-faEnvelopeSquare} from '@fortawesome/free-solid-svg-icons'
+import {faIdCardAlt,faMoneyCheckAlt, faTrash,faWallet,faUserPlus, 
+  faPlaneDeparture,faFrog,faCogs,faList ,faMoneyBillAlt,faPiggyBank,faTags,faIgloo,
+faEnvelopeSquare,faBox,faSignInAlt} from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import myApp from './Containers/myApp/myApp';
 
 
 // import {connect} from 'react-redux';
 
-library.add(faEnvelopeSquare,faMoneyBillAlt,faPiggyBank,faTags,faList,faWallet,faUserPlus,faPlaneDeparture,faFrog,faGoogle,faCogs,faTrash) 
+library.add(faIdCardAlt,faMoneyCheckAlt,faBox,faSignInAlt,faIgloo,faEnvelopeSquare,faMoneyBillAlt,faPiggyBank,faTags,faList,faWallet,faUserPlus,faPlaneDeparture,faFrog,faGoogle,faCogs,faTrash) 
 
 
 

@@ -220,7 +220,7 @@ class LabelEdit extends Component{
                 <h1 className={classes.heading}>Manage your labels</h1>
                     <form className={classes.form} >
                     {form}
-                    <Button btnType="smallx" disabled={(!this.state.controls.labels.valid)} clicked={event => this.buttonPress(event)}>Create new Label</Button>
+                    <Button btnType="label" disabled={(!this.state.controls.labels.valid)} clicked={event => this.buttonPress(event)}>Create new Label</Button>
                    </form>
 
                    <h2 className={classes.subheading}>Income Lables:</h2>

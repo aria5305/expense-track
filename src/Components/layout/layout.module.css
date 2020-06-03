@@ -1,3 +1,13 @@
 .Layout {
         height: 100vh;
 }
+
+@media (max-width: 700px) {
+        .Content {
+                margin-top: 8vh;
+        }
+}
+
+.Header {
+        width: 100%;
+}

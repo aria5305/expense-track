@@ -16,7 +16,7 @@
         border: 1px solid #eee;
         width: 100%;
         margin-top: 1rem;
-        padding: 1rem 2rem;
+        padding: 1rem;
 }
 
 .subheading {
@@ -30,8 +30,8 @@
         list-style: none;
 }
 .listItem {
-        margin: 1rem;
-        padding: 1rem 0;
+        margin: 1rem 0.5rem;
+        padding: 1rem 0.3rem;
         width: 70%;
         background-color: rgba(0, 0, 0, 0.2);
 }

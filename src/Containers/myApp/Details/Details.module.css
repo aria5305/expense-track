@@ -82,7 +82,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: stretch;
-        margin-top: 2rem;
+        margin-top: 1rem;
         border-top: 1px solid #eee;
         padding-top: 1rem;
 }
@@ -91,6 +91,7 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
+
                 align-items: flex-start;
                 padding: 0 0.5rem;
         }
@@ -127,6 +128,7 @@
                 align-items: center;
                 margin: 0 1rem;
                 padding: 0.5rem;
+                padding-bottom: 1.5rem;
         }
 
         .banner {
@@ -135,10 +137,11 @@
 
         .bottomContainer {
                 display: flex;
+                margin: 0;
                 /* border: 1px solid orange; */
-                margin: 0 1rem;
+                /* margin: 0 1rem; */
                 flex-direction: row;
-                padding: 0.5rem;
+                /* padding: 0.5rem; */
                 justify-content: center;
         }
 
@@ -156,13 +159,13 @@
                 margin-left: 1rem;
                 width: 100%;
 
-                align-items: center;
+                /* align-items: center; */
 
                 /* border: 1px solid red; */
         }
 
         .form select {
-                margin: 0;
+                margin-left: 0.5rem;
                 width: 20%;
                 justify-self: center;
         }
@@ -210,6 +213,9 @@
                 /* border: 1px solid red; */
         }
 
+        .topContainer {
+                border: none;
+        }
         .form select {
                 margin: 0;
                 width: 20%;
@@ -217,6 +223,12 @@
         }
 
         .mediumContainer {
-                margin: 0 2rem;
+                margin: 0.5rem 2rem;
+        }
+
+        .bottomContainer {
+                padding: 0.5rem;
+                margin: 0.5rem 1rem;
+                border: none;
         }
 }
