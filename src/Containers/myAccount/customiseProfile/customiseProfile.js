@@ -66,7 +66,7 @@ class customiseProfile extends Component {
                     <div className={classes.details}>
                         <h5>Display name(optional)</h5>
                         <p>Set a display name. This will be what we refer to you as in the app/emails</p>
-                        <p className={classes.small}>Default is "there"</p>
+                        <span className={classes.small}>Default is "there"</span>
                         
                         <Input /> 
                         <Button btnType="small">Save changes</Button>

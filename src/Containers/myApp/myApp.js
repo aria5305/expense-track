@@ -4,6 +4,8 @@ import Details from './Details/Details'
 import Expenses from './Expenses/Expenses';
 import Income from './Incomes/Incomes';
 import {connect} from 'react-redux';
+import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 import LabelEdit from './LabelEdit/LabelEdit';
 import Aux from '../../hoc/Aux';
 import * as actions from '../../store/action/index';
@@ -103,16 +105,42 @@ class MyApp extends Component{
                     <h2 className={classes.heading}>Tool Bar</h2>
                     <ul className={classes.list}>
                         
-                    {this.state.currentComponent ==="details" ? <li id="details" className={classes.itemActive} onClick={this.renderComponent}>Monthly Overview in details </li>
-                     : <li id="details" className={classes.item} onClick={this.renderComponent}>Monthly Overview in details </li>}
-                      {this.state.currentComponent ==="expense" ? <li id="expense" className={classes.itemActive} onClick={this.renderComponent}>Expenses </li>
-                     : <li id="expense" className={classes.item} onClick={this.renderComponent}>Expenses </li>}
-                      {this.state.currentComponent ==="income" ? <li id="income" className={classes.itemActive} onClick={this.renderComponent}>Incomes </li>
-                     : <li id="income" className={classes.item} onClick={this.renderComponent}>Incomes </li>}
+                    {this.state.currentComponent ==="details" ? 
+                    <li id="details" className={classes.itemActive} onClick={this.renderComponent}>
+                    <FontAwesomeIcon className={classes.FontAwesome} icon="list"></FontAwesomeIcon>
+                            Monthly Overview in details
+                    </li>
+                     : <li id="details" className={classes.item} onClick={this.renderComponent}>
+                         <FontAwesomeIcon className={classes.FontAwesome} icon="list"></FontAwesomeIcon>
+                     Monthly Overview in details</li>}
+                      {this.state.currentComponent ==="expense" ? 
+                      <li id="expense" className={classes.itemActive} onClick={this.renderComponent}>
+                          <FontAwesomeIcon className={classes.FontAwesome} icon="money-bill-alt"></FontAwesomeIcon>
+                          Expense 
+                          </li>
+                     : <li id="expense" className={classes.item} onClick={this.renderComponent}>
+                         <FontAwesomeIcon className={classes.FontAwesome} icon="money-bill-alt"></FontAwesomeIcon>
+                     Expense  </li>}
+
+                      {this.state.currentComponent ==="income" ? 
+                      <li id="income" className={classes.itemActive} onClick={this.renderComponent}>
+                            <FontAwesomeIcon className={classes.FontAwesome} icon="piggy-bank"></FontAwesomeIcon>
+                     Income
+                      </li>
+                     : <li id="income" className={classes.item} onClick={this.renderComponent}>
+                    <FontAwesomeIcon className={classes.FontAwesome} icon="piggy-bank"></FontAwesomeIcon>
+                     Income  </li>}
                     
 
-                    {this.state.currentComponent ==="label"  ? <li id="label"  className={classes.itemActive} onClick={this.renderComponent}>Manage Labels</li>
-                     : <li id="label" className={classes.item} onClick={this.renderComponent}>Manage Labels </li>}
+                    {this.state.currentComponent ==="label"  ?
+                     <li id="label"  className={classes.itemActive} onClick={this.renderComponent}>
+                          <FontAwesomeIcon className={classes.FontAwesome} icon="tags"></FontAwesomeIcon>
+                     Manage Labels
+                     </li>
+                     : <li id="label" className={classes.item} onClick={this.renderComponent}> 
+                     <FontAwesomeIcon className={classes.FontAwesome} icon="tags"></FontAwesomeIcon>
+                     Manage Labels
+                     </li>}
 
                      
                     </ul>

@@ -42,7 +42,7 @@ class Details extends Component{
                     },
                     id:'date',
                     value:'',
-                    style:{width:'30rem'},
+                    // style:{width:'30rem'},
                     validation:{
                         required:true,
                        
@@ -436,6 +436,7 @@ class Details extends Component{
             
             return (
                 <Input 
+                className={classes.Input}
                     key={formElement.id}
                     elementType={formElement.config.elementType}
                     elementConfig={formElement.config.elementConfig}

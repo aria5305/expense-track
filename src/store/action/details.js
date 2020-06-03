@@ -131,8 +131,8 @@ export const renderData = () => {
     dispatch(fetchStart())
     // let cash
         var user = firebase.auth().currentUser;
-        firebase.database().ref('/users/' + user.uid + '/').once('value').then(snapshot=> {
-        // firebase.database().ref('/users/Hbfo28g25xXUCoexgKVi6TPcHhg2/').once('value').then(snapshot=> {
+        // firebase.database().ref('/users/' + user.uid + '/').once('value').then(snapshot=> {
+        firebase.database().ref('/users/Hbfo28g25xXUCoexgKVi6TPcHhg2/').once('value').then(snapshot=> {
        
             let ca = snapshot.val();
             // console.log(ca.cash);

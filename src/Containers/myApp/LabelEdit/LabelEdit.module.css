@@ -80,3 +80,13 @@
         justify-content: center;
         margin: 1rem 0;
 }
+
+@media (min-width: 700px) {
+        .labelList {
+                flex-direction: row;
+                flex-wrap: wrap;
+        }
+        .label {
+                align-self: flex-start;
+        }
+}

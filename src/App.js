@@ -16,14 +16,15 @@ import './App.css';
 import { library } from '@fortawesome/fontawesome-svg-core'
 
 import { faTrash,faWallet,faUserPlus, 
-  faPlaneDeparture,faFrog,faCogs,
+  faPlaneDeparture,faFrog,faCogs,faList ,faMoneyBillAlt,faPiggyBank,faTags,
 faEnvelopeSquare} from '@fortawesome/free-solid-svg-icons'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import myApp from './Containers/myApp/myApp';
 
 
 // import {connect} from 'react-redux';
 
-library.add(faEnvelopeSquare,faWallet,faUserPlus,faPlaneDeparture,faFrog,faGoogle,faCogs,faTrash) 
+library.add(faEnvelopeSquare,faMoneyBillAlt,faPiggyBank,faTags,faList,faWallet,faUserPlus,faPlaneDeparture,faFrog,faGoogle,faCogs,faTrash) 
 
 
 
@@ -35,7 +36,7 @@ class App extends Component  {
         <Route path='/login' component={Login}/>
         <Route path='/signup'  component={SignUp}/>
         <Route path='/about'  component={About}/>
-        <Route path="/" exact component={Hero}/>
+        <Route path="/" exact component={myApp}/>
       </Switch>
     )
 
