@@ -1,0 +1,10 @@
+@media (max-width: 700px) {
+        .Content {
+                margin-top: 8vh;
+                height: 92vh;
+        }
+}
+
+.Header {
+        width: 100%;
+}

@@ -4,12 +4,10 @@ import Button from '../../Components/UI/button/button'
 import Input from '../../Components/UI/input/input'
 import {checkValidity} from '../../share/utility';
 import {Redirect} from 'react-router-dom';
-import {FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as actions from '../../store/action/index';
 import {connect} from 'react-redux';
 import Aux from '../../hoc/Aux'
 import Spinner from '../../Components/UI/spinner/spinner'
-//look at Auth page from hamburger builder
 
 
 class Auth extends Component{
@@ -52,7 +50,7 @@ class Auth extends Component{
 
 
     authHandler = (event) => {
-        console.log(this.props.signup)
+        
         event.preventDefault(); 
         this.props.onAuth(this.state.controls.email.value,this.state.controls.password.value,this.props.isSignup);
         // this.props.onSetAuthRedirectPath();
@@ -115,16 +113,23 @@ class Auth extends Component{
 
         
         if(this.props.loading){
-            form = <Spinner/>
-        }
+            let classN="pink";
+        
+         if(this.props.signup === true){
+                classN="yellow"
+         }
 
-        let errorMessage = null; 
-        if(this.props.error){
-            errorMessage = (
-                <p>{this.props.error.message}</p>
-                //this message is only avavilable via FireBase
-            )
+  
+
+          form = 
+          <div className={classes.spin}><Spinner class={classN}/></div>
+           
+         
+            
         }
+        
+
+  
 
         let authRedirect = null; 
 
@@ -143,22 +148,30 @@ class Auth extends Component{
         return (     
                 
             <Aux>
-                {errorMessage}
+                {/* {errorMessage} */}
                 {authRedirect}
             
                 <form className={classes.form}
                  onSubmit={(event)=>event.preventDefault()}>
                     {this.props.children}
                      {form}
-               <div>
-
                    
-               <Button btnType="Success" clicked={this.authHandler}>
-                    {this.props.btnType}
-                </Button>
+               <div>
+    
+            <Button btnType="auth" clicked={this.authHandler}>
+                    {this.props.btnText}
+            </Button>
 
-
+             
+                {/* {this.props.isLogin ?  
+               <div>
+                        <NavLink className={classes.links} to='/forgotusername'>Forgot User name</NavLink>
+                        <NavLink className={classes.links} to='/forgotpassword'>Forgot Password</NavLink>
+            
+               </div>    
+               : null } */}
         
+
               
                 </div>
                 </form>

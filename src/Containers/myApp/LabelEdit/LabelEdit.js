@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classes from './LabelEdit.module.css';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/action/index'
-import Aux from '../../../hoc/Aux';
 import {checkValidity} from '../../../share/utility';
 import Input from '../../../Components/UI/input/input';
 import Button from '../../../Components/UI/button/button';
@@ -220,7 +219,7 @@ class LabelEdit extends Component{
                 <h1 className={classes.heading}>Manage your labels</h1>
                     <form className={classes.form} >
                     {form}
-                    <Button btnType="small" disabled={(!this.state.controls.labels.valid)} clicked={event => this.buttonPress(event)}>Create new Label</Button>
+                    <Button btnType="label" disabled={(!this.state.controls.labels.valid)} clicked={event => this.buttonPress(event)}>Create new Label</Button>
                    </form>
 
                    <h2 className={classes.subheading}>Income Lables:</h2>

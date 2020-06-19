@@ -17,5 +17,6 @@ export {
     postData,
     renderData,
     deleteLabel,
+    clearState,
     addLabel,
 }from './details'

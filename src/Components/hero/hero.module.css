@@ -1,6 +1,6 @@
 .content {
         width: 100vw;
-        height: 100vh;
+        height: 92vh;
         text-align: center;
         background-image: linear-gradient(
                         to right bottom,
@@ -13,11 +13,18 @@
         background-size: cover;
 }
 
-.heading {
-        padding-top: 20rem;
+.link {
+        text-decoration: none;
         color: white;
-        font-size: 3rem;
+        padding: 2rem;
+}
+.heading {
+        color: white;
+
         text-align: center;
+
+        font-size: 2rem;
+        padding: 30vh 0.5rem 0.5rem 0.5rem;
 }
 
 .subheading {
@@ -25,4 +32,11 @@
         font-size: 2rem;
         color: rgba(255, 255, 255, 0.7);
         text-align: center;
+}
+
+@media (min-width: 900px) {
+        .heading {
+                font-size: 3rem;
+                padding-top: 35vh;
+        }
 }

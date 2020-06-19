@@ -40,11 +40,20 @@ const fetchStart = () => {
     };
 }
 
-const fetchFailed = (error) => {
+const fetchFailed = (error ="no data") => {
+ 
+    
+    let  label = {
+        income:[ {value:'income',displayValue:'income'},], 
+        expense:[ {value:'Shopping',displayValue:'Shopping'},
+                  {value:'Food',displayValue:'Food'},]}
+
     return {
         type:actionTypes.FETCH_DATA_FAILED,
-        error:error,
-        loading:false
+        error:error,  
+        labels:label,
+        loading:false,
+     
     };
 }
 
@@ -123,6 +132,26 @@ export const postData = (id,data,type) => {
   
 }
 
+// const initialRender = () => {
+
+
+//     return {
+//         type:actionTypes.INITIAL_RENDER
+//         cash:cash,
+//         incomeDetails:incomeDetails,
+//         expenseDetails:expenseDetails,
+//         labels:labels,
+      
+//     };
+
+// }
+
+export const clearState  = () => {
+return {
+    type:actionTypes.CLEAR_STATE,
+         
+    }
+}
 
 export const renderData = () => {
     
@@ -131,24 +160,36 @@ export const renderData = () => {
     dispatch(fetchStart())
     // let cash
         var user = firebase.auth().currentUser;
+
+     
         firebase.database().ref('/users/' + user.uid + '/').once('value').then(snapshot=> {
-        // firebase.database().ref('/users/Hbfo28g25xXUCoexgKVi6TPcHhg2/').once('value').then(snapshot=> {
-       
+        
+           
             let ca = snapshot.val();
-            // console.log(ca.cash);
-            // console.log(ca)
-                dispatch(fetchSuccess(ca.cash, ca.incomeDetails, ca.expenseDetails,ca.categories));
-            
-        }).catch( error => {
-            // console.log(error)
-            dispatch(fetchFailed(error))
-        })
+            console.log(ca);
+                 if(ca !== null){
+                        dispatch(fetchSuccess(ca.cash, ca.incomeDetails, ca.expenseDetails,ca.categories));
+                 }else{
+                        dispatch(fetchFailed())
+                 }
+                })
+        // }).catch(error => {
+        //     dispatch(fetchFailed(error))
+        //     console.log(error)
+        // })
+      
+        //    }else{
+        //        dispatch(fetchFailed())
+           }
+        // })
+    }
+        
 
 
 
 
-}
-}
+// }
+// }
 
 export const deleteLabel  = (obj) => {
 
