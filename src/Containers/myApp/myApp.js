@@ -7,7 +7,7 @@ import {connect} from 'react-redux';
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import LabelEdit from './LabelEdit/LabelEdit';
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Auxillary';
 import * as actions from '../../store/action/index';
 class MyApp extends Component{
     constructor(props){

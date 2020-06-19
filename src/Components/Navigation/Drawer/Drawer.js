@@ -2,7 +2,7 @@ import React from 'react';
 import BackDrop from '../../UI/backdrop/backdrop'
 import NavigationItems from '../NavigationItems/NavigationItems';
 import classes from './Drawer.module.css';
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxillary'
 const sideDrawer = (props) => {
 
     // conditionally attach  different css classes 

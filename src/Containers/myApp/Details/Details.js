@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxillary'
 import classes from './Details.module.css';
 import Input from '../../../Components/UI/input/input';
 import {checkValidity} from '../../../share/utility'
