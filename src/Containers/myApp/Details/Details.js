@@ -5,6 +5,7 @@ import Input from '../../../Components/UI/input/input';
 import {checkValidity} from '../../../share/utility'
 import Button from '../../../Components/UI/button/button'
 import {connect} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'; 
 import * as actions from '../../../store/action/index';
 
 import "firebase/database"
@@ -332,8 +333,9 @@ class Details extends Component{
     }
     
         return [incomeDe,yearObj]
-}
+    }
 
+  
 
 
     componentDidMount(){
@@ -467,7 +469,12 @@ class Details extends Component{
                 incomeList = (
                     this.props.incomeDetails[this.props.currentYear][this.props.currentMonth].map((inc,id) => {
                 
-                        return <li key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
+                        return <li className={classes.items} key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p> 
+                        <FontAwesomeIcon  className={classes.icon}icon="trash" 
+                        onClick={() => {
+                            this.props.onDeleteIncEntry(this.props.incomeDetails,inc,this.props.currentYear,this.props.currentMonth)}
+
+                        }></FontAwesomeIcon></li>
                     })
                 )
                 }
@@ -482,7 +489,9 @@ class Details extends Component{
                 if( this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
                             expenseList = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth].map((exp,id) => {
                                 
-                            return <li key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p></li>
+                            return <li className={classes.items}  key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p> 
+                            <FontAwesomeIcon className={classes.icon} icon="trash"  
+                            onClick={()=>this.props.onDeleteExpEntry(this.props.expenseDetails,exp, this.props.currentYear,this.props.currentMonth)}></FontAwesomeIcon></li>
                 })
             
             }
@@ -553,7 +562,9 @@ const mapDispatchToProps = dispatch => {
         onAddIncome: (income,data) => dispatch(actions.addIncome(income,data)),
         onAddExpense: (expense,data) => dispatch(actions.addExpense(expense,data)),
         onPostData: (id,data,type) => dispatch(actions.postData(id,data,type)),
-        onRenderingData: () => dispatch(actions.renderData())
+        onRenderingData: () => dispatch(actions.renderData()),
+        onDeleteExpEntry: (obj,item, currentYear,currentMonth) => dispatch(actions.deleteExpenseEntry(obj,item, currentYear,currentMonth)),
+        onDeleteIncEntry: (obj,item, currentYear,currentMonth) => dispatch(actions.deleteIncomeEntry(obj,item, currentYear,currentMonth))
                 
     }
 }

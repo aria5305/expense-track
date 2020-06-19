@@ -19,4 +19,6 @@ export {
     deleteLabel,
     clearState,
     addLabel,
+    deleteIncomeEntry,
+    deleteExpenseEntry
 }from './details'

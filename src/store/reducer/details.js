@@ -95,7 +95,20 @@ const deleteLabel = (state,action) => {
     return updatedObject(state,{
         labels:action.label
     })
-    
+}
+
+const deleteExpenseEntry = (state,action) => {
+
+    return updatedObject(state,{
+        expenseDetails:action.expenseDetails
+        
+    })
+}
+
+const deleteIncomeEntry = (state,action) => {
+    return updatedObject(state,{
+        incomeDetails:action.incomeDetails
+    })
 }
 
 
@@ -115,6 +128,9 @@ const reducer = (state = initialState,action) => {
         case actionTypes.POST_START: return postStart(state,action );
         case actionTypes.POST_SUCCESS: return postSuccess(state,action); 
         case actionTypes.POST_FAILED: return postFailed(state,action);
+
+        case actionTypes.DELETE_INCOME_ENTRY:return deleteIncomeEntry(state,action)
+        case actionTypes.DELETE_EXPENSE_ENTRY: return deleteExpenseEntry(state,action)
 
         case actionTypes.DELETE_LABEL: return deleteLabel(state,action);
         case actionTypes.ADD_LABEL: return addLabel(state,action)

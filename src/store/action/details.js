@@ -132,19 +132,7 @@ export const postData = (id,data,type) => {
   
 }
 
-// const initialRender = () => {
 
-
-//     return {
-//         type:actionTypes.INITIAL_RENDER
-//         cash:cash,
-//         incomeDetails:incomeDetails,
-//         expenseDetails:expenseDetails,
-//         labels:labels,
-      
-//     };
-
-// }
 
 export const clearState  = () => {
 return {
@@ -173,23 +161,55 @@ export const renderData = () => {
                         dispatch(fetchFailed())
                  }
                 })
-        // }).catch(error => {
-        //     dispatch(fetchFailed(error))
-        //     console.log(error)
-        // })
-      
-        //    }else{
-        //        dispatch(fetchFailed())
-           }
-        // })
+            }
     }
         
 
 
 
+export const deleteIncomeEntry = (obj,item, currentYear,currentMonth) => {
+   
+        let arr = [...obj[currentYear][currentMonth]]
 
-// }
-// }
+
+        const removeIndex = arr.indexOf(item);
+       
+
+        arr.splice(removeIndex,1);
+
+        let stateObj = {...obj, [currentYear]:{...obj[currentYear], [currentMonth]:arr}}; 
+
+      
+        return {
+            type:actionTypes.DELETE_INCOME_ENTRY, 
+            incomeDetails:stateObj
+
+        }
+     }
+
+export const updateDB = () => {
+
+    
+}
+export const deleteExpenseEntry = (obj,item, currentYear,currentMonth) => {
+   
+    let arr = [...obj[currentYear][currentMonth]]
+
+
+    const removeIndex = arr.indexOf(item);
+   
+
+    arr.splice(removeIndex,1);
+
+    let stateObj = {...obj, [currentYear]:{...obj[currentYear], [currentMonth]:arr}}; 
+
+  
+    return {
+        type:actionTypes.DELETE_EXPENSE_ENTRY, 
+        expenseDetails:stateObj
+
+    }
+ }
 
 export const deleteLabel  = (obj) => {
 
