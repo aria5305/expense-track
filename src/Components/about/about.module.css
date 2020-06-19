@@ -18,6 +18,14 @@
         padding: 50vh 2rem 0 2rem;
 }
 
+.desContainer {
+        margin: 2rem 1rem;
+}
+
+.subheading {
+        text-align: center;
+        margin-bottom: 1rem;
+}
 .introContainer {
         margin-top: 5rem;
         padding: 1rem;
@@ -47,7 +55,7 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        padding: 0rem 2rem 0 2rem;
+        padding: 0rem 2rem 3rem 2rem;
         margin: 0 auto;
 }
 .plansContainer div {
@@ -63,6 +71,11 @@
         box-shadow: 5px 5px 8px -3px rgba(0, 0, 0, 0.5);
 }
 
+.container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+}
 .planHeading {
         font-size: 5rem;
         margin-left: 2rem;
@@ -71,6 +84,12 @@
 .FontAwesome {
         color: var(--yellow);
         font-size: 2.5rem;
+}
+.pic {
+        width: 140%;
+}
+.planList {
+        list-style: none;
 }
 
 .planSubheading {
@@ -96,23 +115,6 @@
         /* border: 1px solid var(--blue-green); */
 }
 
-.container {
-        width: 90%;
-        height: 50vh;
-        margin: 5rem auto;
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        /* box-shadow: 5px 5px 8px -3px rgba(0, 0, 0, 0.5); */
-}
-.pic {
-        width: 50%;
-        position: relative;
-        margin-right: 5rem;
-        z-index: -1;
-}
-
 .formHeading {
         font-size: 2rem;
         text-align: center;
@@ -131,6 +133,21 @@
         .plansContainer {
                 padding: 0;
         }
+        .pic {
+                display: none;
+        }
+
+        .formHeading {
+                font-size: 1.3rem;
+                margin-top: 1rem;
+        }
+}
+
+@media (max-width: 700px) {
+        .pic {
+                width: 100%;
+                margin-bottom: 2rem;
+        }
 }
 @media (min-width: 700px) {
         .plansContainer {
@@ -139,15 +156,18 @@
 
         .plansContainer div {
                 margin: 1rem 0.3rem;
-                /* padding: 0; */
         }
         .heading {
-                /* width: 50%; */
                 text-align: left;
                 padding-top: 40vh;
                 margin-left: 2vw;
                 font-size: 5em;
                 color: var(--red);
+        }
+
+        .subheading {
+                text-align: left;
+                font-size: 3rem;
         }
 
         .aboutIntro h3 {
@@ -181,6 +201,7 @@
 
         .desContainer {
                 width: 50%;
+                margin: 0;
         }
 
         .plans {
@@ -191,9 +212,7 @@
 
         .planHeading {
                 font-size: 8rem;
-                /* position: absolute; */
-                /* top: 10%;
-                left: 50%; */
+
                 margin-top: -8rem;
                 color: var(--blue-green);
         }
@@ -208,15 +227,35 @@
 @media (min-width: 950px) {
         .plansContainer {
                 width: 100%;
-                border: 1px solid red;
-                padding: 0;
-                /* padding-left: 1rem; */
+                padding: 0 0 5rem 0;
+
                 justify-content: flex-start;
         }
 
         .plansContainer div {
                 margin-right: 0.31rem;
                 width: 32%;
+        }
+
+        .introContainer {
+                margin-top: 3rem;
+        }
+}
+
+@media (min-width: 1000px) {
+        .pic {
+                width: 70%;
+                position: relative;
+                /* margin-right: 5rem; */
+                /* z-index: -1; */
+        }
+        .container {
+                width: 100%;
+                height: 50vh;
+                margin: 5rem auto;
+
+                align-items: center;
+                justify-content: space-around;
         }
 }
 

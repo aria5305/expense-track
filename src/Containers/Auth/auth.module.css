@@ -8,9 +8,9 @@
         align-items: center;
         justify-content: center;
 }
-
-.form div {
-        width: 100%;
+.form div:not(.spin) {
+        /* border: 1px solid red; */
+        /* width: 100%; */
         text-align: center;
         margin: 1rem auto;
 }
@@ -31,6 +31,9 @@
 }
 
 @media (min-width: 800px) {
+        .form {
+                margin-top: 2rem;
+        }
         .links,
         .links:visited {
                 color: var(--red);

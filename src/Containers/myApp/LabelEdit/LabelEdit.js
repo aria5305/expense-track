@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import classes from './LabelEdit.module.css';
 import {connect} from 'react-redux';
 import * as actions from '../../../store/action/index'
-import Aux from '../../../hoc/Aux';
 import {checkValidity} from '../../../share/utility';
 import Input from '../../../Components/UI/input/input';
 import Button from '../../../Components/UI/button/button';

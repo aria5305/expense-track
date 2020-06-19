@@ -1,7 +1,6 @@
 import React from 'react'
 import classes from './Expenses.module.css';
 import { Component } from 'react';
-import Aux from '../../../hoc/Aux'
 import '../../../../node_modules/react-vis/dist/style.css';
 // import {XYPlot, LineSeries,VerticalGridLines,HorizontalGridLines,XAxis,YAxis} from 'react-vis';
 import {RadialChart} from 'react-vis';
@@ -15,28 +14,8 @@ class Expense extends Component{
         super(props)
         this.state = {
             data: [],
-            controls:{  
-                selectGraph:{ elementType:'select',
-                elementConfig:{
-                    type:'select',
-                    options:[
-                        {value:'pie',displayValue:'Pie Graph'},
-                        {value:'line',displayValue:'Line Graph'},
-                        {value:'bar',displayValue:'Bar Graph'}],
-                  
-                },
-                id:'selectGraph',
-                value:'please select',
-                validation:{
-                    required:true,
-                },
-                valid:false,
-                touched:false,
-                style:{width:'5rem'}
-            },
+           
             
-
-             }  
         }
 
          
@@ -55,7 +34,7 @@ class Expense extends Component{
 let exp = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading ){
+      if(!this.props.loading && this.props.expenseDetails === null){
         exp = 0
         exp = exp.toFixed(2)
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
@@ -66,7 +45,7 @@ let list = null;
 
         if(this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
             
-         exp = this.props.cash[this.props.currentYear][this.props.currentMonth].expense.toFixed(2);
+         exp = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].expense).toFixed(2);
             let incArr = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth];
            
            

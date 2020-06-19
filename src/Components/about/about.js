@@ -6,6 +6,7 @@ import image2 from '../../assets/images/undraw_studying_s3l7.svg'
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../UI/button/button';
 import Modal from '../UI/modal/modal'; 
+import {Link} from 'react-router-dom';
 import Auth from '../../Containers/Auth/Auth';
 import {connect} from 'react-redux';
 import * as actions from '../../store/action/index';
@@ -27,7 +28,7 @@ class about extends Component{
           
 
         <div className={classes.description}>
-           <img className={classes.image } src={image}></img>
+           <img className={classes.image } alt="manWithComputer" src={image}></img>
             
             <div className={classes.desContainer}>
                 <h3 className={classes.subheading}>Repeated “Lorem ipsum"</h3>
@@ -40,12 +41,12 @@ class about extends Component{
 
         <div className={classes.description}>
             <div className={classes.desContainer}>
-                    <h3>Repeated “Lorem ipsum"</h3>
+                    <h3 className={classes.subheading}>Repeated “Lorem ipsum"</h3>
                     <p className={classes.paragraph}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed faucibus, augue nec placerat pharetra, lacus metus pretium neque, sed molestie erat dolor at purus. Nulla sollicitudin enim ut tincidunt euismod. Phasellus interdum tellus at semper lobortis. Nullam lectus dolor, viverra non tempus ac, venenatis sit amet augue. Donec arcu nisi, ultricies vel enim nec, lobortis mattis nunc. Mauris faucibus purus et tortor venenatis, vitae venenatis quam blandit. Curabitur urna elit, gravida sed lorem quis, bibendum congue eros. Morbi vestibulum fringilla rutrum. Ut nulla felis, accumsan a magna in, molestie iaculis felis. Donec vehicula sollicitudin nunc, dictum eleifend turpis mattis a. Phasellus congue aliquam suscipit. Vestibulum a mi neque. Nam maximus a metus nec pretium. Morbi efficitur justo massa, sed blandit velit dapibus vitae.
                     </p>
                 </div>
-           <img className={classes.image} src={image2}></img>
+           <img className={classes.image} alt="womanWritingonBook"src={image2}></img>
             
            
         </div>
@@ -109,15 +110,15 @@ class about extends Component{
     </div>
 
         <Modal 
-                color ="var(--yellow)"
+                color ="white"
                 show={this.props.showModal}
                 modalClosed={this.props.onHideModal}>
                 
                 <div className={classes.container}>
                     <img src={catPic} className={classes.pic} alt="signupImage"/>
-                  <Auth btnType="Sign up" isSignup>
+                  <Auth btnText= "Sign up">
                     <h1 className={classes.formHeading}>Welcome to bugetting without headaches</h1>
-                    <p className={classes.hint}>Already sign up? Click <a href="#">here</a> to login instead</p>
+                    <p className={classes.hint}>Already sign up? Click <Link to='/login'>here</Link> to login instead</p>
                   </Auth>
                     {/* {orderSummary} */}
                 </div>

@@ -47,7 +47,7 @@ class AccountSetting extends Component {
                             <h5>Email Address</h5>
                             {this.props.email}
                         </div>
-                        <Button id="updateEmail" clicked={ (event) => 
+                        <Button btnType="accountChanges" id="updateEmail" clicked={ (event) => 
                           
                         this.saveCurrentModal(event)}>Update Email</Button>
                         </div>
@@ -57,7 +57,7 @@ class AccountSetting extends Component {
                             <h5>Change password</h5>
                             <p>Password must be at least 6 characters long</p>
                             </div>
-                        <Button id="changePassword" clicked={ (event) => 
+                        <Button btnType="accountChanges" id="changePassword" clicked={ (event) => 
                         {
                         this.saveCurrentModal(event)}}>Change password</Button>
                         </div>
@@ -72,7 +72,7 @@ class AccountSetting extends Component {
 
                     <div className={classes.group}>
                     
-                        <Button id="Deactive" clicked={ (event) => 
+                        <Button  btnType="accountChanges"id="Deactive" clicked={ (event) => 
                         {
                         this.saveCurrentModal(event)}}>
                             Deactive account<FontAwesomeIcon icon="trash" className={classes.FontAwesomeIcon}></FontAwesomeIcon></Button>
@@ -87,7 +87,7 @@ class AccountSetting extends Component {
             modalClosed={this.props.onHideModal}>
             
 
-                    <div className={classes.container}>
+                    <div className={classes.Modal_inner}>
                 {this.state.currentmodal ==="Deactive" ? <Deactive method="Deactive"/> :null}
                 {this.state.currentmodal ==="changePassword" ?  <ChangePassword method="changePassword"/> : null}
                 {this.state.currentmodal ==="updateEmail" ? <UpdateEmail method="updateEmail"/> : null}

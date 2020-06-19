@@ -6,6 +6,16 @@
         flex-direction: row;
 }
 
+.link {
+        color: var(--orange);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 1.5rem;
+        font-weight: 300;
+}
+
 @media (min-width: 700px) {
         .NavigationItems {
                 margin-left: 2rem;

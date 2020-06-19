@@ -2,11 +2,11 @@ import React, { Component } from 'react'
 import Aux from '../../../hoc/Aux'
 import classes from './Details.module.css';
 import Input from '../../../Components/UI/input/input';
-import {checkValidity, updatedObject} from '../../../share/utility'
+import {checkValidity} from '../../../share/utility'
 import Button from '../../../Components/UI/button/button'
 import {connect} from 'react-redux';
 import * as actions from '../../../store/action/index';
-import * as firebase from "firebase/app";
+
 import "firebase/database"
 
 class Details extends Component{
@@ -84,7 +84,7 @@ class Details extends Component{
             // currentMonth: null,
             // currentYear: null,
             loading:true,
-            selectLabel:null,
+            selectLabel:'income',
       
          }  
        
@@ -213,7 +213,9 @@ class Details extends Component{
         }else if(!this.props.cash[currentYear][currentMonth].expense){
             expenseDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"expense": parseInt(expense)}}}
             console.log(expenseDe,"second")
-        }  
+        }  else{
+            expenseDe=null;
+        }
         
         let yearObj; 
         let monthObject
@@ -280,6 +282,8 @@ class Details extends Component{
     }else if(!this.props.cash[currentYear][currentMonth].income){
         incomeDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"income": parseInt(income)}}}
         console.log(incomeDe,"second")
+    }else{
+        incomeDe= null;
     }
     
 
@@ -371,7 +375,7 @@ class Details extends Component{
           
 
     
-        }
+    }
     
 
      
@@ -384,7 +388,7 @@ class Details extends Component{
         let label = null;
         // let total =0;
 
-        if(!this.props.loading) {
+        if(!this.props.loading ) {
            
             if(this.props.cash){
                 if(this.props.cash[this.props.currentYear] && this.props.cash[this.props.currentYear][this.props.currentMonth]){
@@ -454,9 +458,10 @@ class Details extends Component{
         let expenseList = null; 
         let incomeList = null;
 
+      
        
        
-        if(this.props.incomeDetails){
+        if(this.props.incomeDetails ){
             if(this.props.incomeDetails[this.props.currentYear]){
                 if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
                 incomeList = (
@@ -472,7 +477,7 @@ class Details extends Component{
         }
         }
 
-        if(this.props.expenseDetails){
+        if(this.props.expenseDetails ){
             if( this.props.expenseDetails[this.props.currentYear]){
                 if( this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
                             expenseList = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth].map((exp,id) => {
@@ -536,7 +541,8 @@ const mapStateToProps = state => {
         expenseDetails:state.details.expenseDetails,
         localId:state.auth.localId,
         loading:state.details.loading,
-        labels:state.details.labels
+        labels:state.details.labels,
+        error:state.details.error,
 
       
     }

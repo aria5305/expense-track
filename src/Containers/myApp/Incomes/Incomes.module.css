@@ -4,8 +4,12 @@
         align-items: center;
         justify-content: center;
         margin-top: 2rem;
+        min-height: 40rem;
 }
 
+.Donut svg {
+        height: 20rem;
+}
 .heading {
         color: var(--orange);
         font-weight: 300;
@@ -38,16 +42,16 @@
 
 @media (min-width: 800px) {
         .Graph {
-                border: 1px solid red;
                 width: 100%;
                 padding: 0 0.5rem;
                 /* border: 1px solid red; */
         }
 
         .listContainer {
+                border: none;
                 margin-top: 1rem;
                 border-radius: 2rem;
-                border: 1px solid rgba(255, 255, 255, 0.8);
+
                 width: 50%;
 
                 margin-left: auto;
@@ -67,9 +71,9 @@
         }
 
         .subheading {
-                color: white;
+                color: var(--red);
                 padding: 1rem 0;
-                background-color: rgba(0, 0, 0, 0.7);
+                /* background-color: rgba(0, 0, 0, 0.7); */
         }
 
         .listItem {

@@ -6,6 +6,7 @@ import Navigation from '../Navigation/Navigation';
 import Drawer from '../Navigation/Drawer/Drawer';
 import {connect} from 'react-redux';
 
+
 class layout extends Component {
 
     constructor(props){
@@ -34,6 +35,7 @@ class layout extends Component {
                 <Drawer isAuth={this.props.isAuth}open={this.state.showSideDrawer} closed={this.sideDrawerClosedHandler}/>
             </div>
             <main className={classes.Content}>
+                 
                     {this.props.children}
             </main>
         </div>

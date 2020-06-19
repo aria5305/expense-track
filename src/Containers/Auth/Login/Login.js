@@ -3,7 +3,6 @@ import classes from './Login.module.css';
 import Auth from '../Auth';
 import * as actions from '../../../store/action/index';
 import {connect} from 'react-redux';
-import Spinner from '../../../Components/UI/spinner/spinner';
 
 
 //look at Auth page from hamburger builder

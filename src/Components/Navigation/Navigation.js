@@ -2,7 +2,6 @@ import React from 'react'
 import classes from './Navigation.module.css'
 import Logo from '../logo/logo'
 import DrawerToggle from './Drawer/DrawerToggle/DrawerToggle'
-import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import NavigationItems from './NavigationItems/NavigationItems'
 const Navigation = (props) => (
 

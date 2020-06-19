@@ -16,15 +16,6 @@ const initialState = {
         expenseDetails: {},
         error:null,
         labels:{ }
-              
-        // {value:'',displayValue:'Select a label'},
-        
-        // {value:'expense',displayValue:'expense'},
-   
-        // {value:'Transport',displayValue:'Transport'},
-        // {value:'Health & Exercise',displayValue:'Health & Exercise'},
-        // {value:'Gifts',displayValue:'Gifts'},
-        // {value:'Home and Utility',displayValue:'Home and Utility'},
         
 }
 
@@ -77,10 +68,21 @@ const fetchDataSuccess = (state,action) => {
 const fetchDataFailed = (state,action) => {
     return updatedObject(state, {
         error:action.error,
-        loading:false
+        loading:false,
+        labels:action.labels
     })
 }
 
+
+const clearState = (state,action ) => {
+    return updatedObject(state,{
+        cash:null,
+        incomeDetails:null,
+        expenseDetails:null,
+        labels:null,
+        loading:true,
+    })
+}
 
 const addLabel = (state,action) => {
     return updatedObject(state,{
@@ -108,6 +110,7 @@ const reducer = (state = initialState,action) => {
         case actionTypes.FETCH_DATA_START: return fetchDataStart(state,action);
         case actionTypes.FETCH_DATA_SUCCESS: return fetchDataSuccess(state,action);
         case actionTypes.FETCH_DATA_FAILED: return fetchDataFailed(state,action);
+        case actionTypes.CLEAR_STATE: return clearState(state,action);
 
         case actionTypes.POST_START: return postStart(state,action );
         case actionTypes.POST_SUCCESS: return postSuccess(state,action); 

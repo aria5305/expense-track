@@ -14,17 +14,12 @@ class MyAccount extends Component{
         }
         render(){
         return (
-        <div className={classes.container}>
-           <h1 className={classes.heading}><FontAwesomeIcon icon="cogs" className={classes.FontAwesomeIcon}></FontAwesomeIcon> Account Setup </h1>
-
-
-
-
+       
+ 
             <AccountSettings/>
-            <CutomiseProfile />
+         
+                //customise Profile - done but decided to take it out - you can still view the code I wrote for this section on Github
 
-
-        </div>
         )
     
 }

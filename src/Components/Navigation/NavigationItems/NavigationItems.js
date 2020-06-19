@@ -11,7 +11,7 @@ const navigationItems = (props) => (
       {(props.isAuth) ? <NavigationItem close={props.clicked} link='/myapp'><FontAwesomeIcon className={classes.FontAwesome} icon="money-check-alt"/> <p>My App</p></NavigationItem> :null}
       {(!props.isAuth) ? <NavigationItem close={props.clicked} link='/login'><FontAwesomeIcon className={classes.FontAwesome} icon="sign-in-alt"/> <p>Login</p></NavigationItem> :null}
       {(!props.isAuth) ? <NavigationItem close={props.clicked} link='/signup'><FontAwesomeIcon className={classes.FontAwesome} icon="user-plus"/><p>Sign up</p></NavigationItem> : 
-       <NavigationItem close={props.clicked} link='/logout'>Logout</NavigationItem>}
+       <NavigationItem close={props.clicked} link='/logout'><FontAwesomeIcon className={classes.FontAwesome} icon="sign-out-alt"/>Logout</NavigationItem>}
       
     </ul>
 

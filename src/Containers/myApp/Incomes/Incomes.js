@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Incomes.module.css';
 import { Component } from 'react';
-import Aux from '../../../hoc/Aux'
+
 import '../../../../node_modules/react-vis/dist/style.css';
 // import {XYPlot, LineSeries,VerticalGridLines,HorizontalGridLines,XAxis,YAxis} from 'react-vis';
 import {RadialChart} from 'react-vis';
@@ -15,28 +15,7 @@ class Expense extends Component{
         super(props)
         this.state = {
             data: [],
-            // controls:{  
-            //     selectGraph:{ elementType:'select',
-            //     elementConfig:{
-            //         type:'select',
-            //         options:[
-            //             {value:'pie',displayValue:'Pie Graph'},
-            //             {value:'line',displayValue:'Line Graph'},
-            //             {value:'bar',displayValue:'Bar Graph'}],
-                  
-            //     },
-            //     id:'selectGraph',
-            //     value:'please select',
-            //     validation:{
-            //         required:true,
-            //     },
-            //     valid:false,
-            //     touched:false,
-            //     style:{width:'5rem'}
-            // },
-            
-
-        // }
+        
         }
 
          
@@ -55,7 +34,7 @@ class Expense extends Component{
 let inc = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading ){
+      if(!this.props.loading && this.props.expenseDetails === null){
           inc = 0
           inc = inc.toFixed(2)
 
@@ -67,7 +46,7 @@ let list = null;
 
         if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
             
-         inc = this.props.cash[this.props.currentYear][this.props.currentMonth].income.toFixed(2);
+         inc = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].income).toFixed(2);
             let incArr = this.props.incomeDetails[this.props.currentYear][this.props.currentMonth];
            
            

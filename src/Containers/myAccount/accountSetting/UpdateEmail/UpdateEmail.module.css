@@ -9,13 +9,15 @@
 }
 .container {
         display: flex;
+        width: 100%;
         align-items: center;
         flex-direction: column;
-        width: 80%;
-        padding: 1.5rem;
+
         margin: 0 auto;
 }
 
-.subCon {
-        width: 50%;
+@media (min-width: 700px) {
+        .subCon {
+                width: 50%;
+        }
 }

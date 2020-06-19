@@ -22,6 +22,7 @@
                 margin: 20vh auto 0rem auto;
                 width: 90%;
                 height: auto;
+                max-width: 60rem;
                 /* height: 50vh; */
                 box-shadow: 0px 5px 5px 5px rgba(109, 109, 109, 0.1);
                 text-align: center;

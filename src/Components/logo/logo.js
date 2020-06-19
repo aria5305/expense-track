@@ -1,6 +1,6 @@
 import React from 'react'; 
 import classes from './Logo.module.css';
-import Aux from '../../hoc/Aux'
+
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const logo = (props) => {
