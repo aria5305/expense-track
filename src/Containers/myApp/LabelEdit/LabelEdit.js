@@ -185,6 +185,7 @@ class LabelEdit extends Component{
         if(this.props.labels){
         
         let newArr=   this.props.labels.income.slice()
+        newArr.splice(0,1)
           
         listItemsIncome = newArr.map( label => {
                     return (
@@ -199,7 +200,7 @@ class LabelEdit extends Component{
             })
 
             let eArr=   this.props.labels.expense.slice()
-          
+            eArr.splice(0,1)
             listItemsExpense = eArr.map( label => {
                         return (
                         
