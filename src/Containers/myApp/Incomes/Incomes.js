@@ -28,23 +28,64 @@ class Expense extends Component{
         return new Date(year,month,0).getDate()
         
     }  
+
+    componentDidMount(){
+        let newArr = [] 
+        let incArr = this.props.incomeDetails[this.props.currentYear][this.props.currentMonth];
+           
+           
+         
+        let newObj = incArr.reduce((obj,item) => {
+
+            if(!obj[item.labelSelect]){
+            obj[item.labelSelect] = { amount:parseInt(item.amount)}
+            
+            }else{
+            
+                obj[item.labelSelect].amount += parseInt(item.amount)
+            }
+       
+            return obj;
+
+        },{})
+
+
+        //calculate angle
+        
+        //calculate angle
+        let totalAmount = 0;
+        for(let key in newObj) {
+            
+            totalAmount += parseInt(newObj[key].amount); 
+          
+        
+            newArr.push({angle:((newObj[key].amount/totalAmount) * 100), label:key+ " "+ newObj[key].amount.toFixed(2)})
+        }
+
+        this.setState({data:newArr})
+
+    }
+    
     
     render(){
 
 let inc = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading || this.props.expenseDetails === null){
+      if(!this.props.loading){
           inc = 0
           inc = inc.toFixed(2)
 
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
  
         // newArr = new Array (num); 
-      
-            
+     
 
-        if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
+    if(!this.props.incomeDetails){
+        inc = 0
+        inc = inc.toFixed(2)
+    }
+    }else if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
             
          inc = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].income).toFixed(2);
             let incArr = this.props.incomeDetails[this.props.currentYear][this.props.currentMonth];
@@ -78,7 +119,7 @@ let list = null;
                 newArr.push({angle:((newObj[key].amount/totalAmount) * 100), label:key+ " "+ newObj[key].amount.toFixed(2)})
             }
 
-            list = newArr.map(item => {
+            list = this.state.data.map(item => {
               return <li key={item.label} className={classes.listItem}> {item.label}</li>
 
                
@@ -88,7 +129,13 @@ let list = null;
 
         
     
-    }
+    }else{
+             
+         inc = 0
+            inc = inc.toFixed(2)
+
+
+    
 }
       
     return (
@@ -97,7 +144,7 @@ let list = null;
             <h1 className={classes.heading}>Total income this month:{inc}</h1>
   
         <div className={classes.Flex}>
-            <RadialChart className={classes.Donut}innerRadius={95} labelsStyle={{fontSize:17}} radius={145} data ={newArr} height={300} width={400} showLabels></RadialChart>
+            <RadialChart className={classes.Donut}innerRadius={95} labelsStyle={{fontSize:17}} radius={145} data ={this.state.data} height={300} width={400} showLabels></RadialChart>
             <div className={classes.listContainer}>
                 <h3 className={classes.subheading}>List of Incomes</h3>
                 <ul className={classes.list}>
@@ -125,6 +172,7 @@ const mapDispatchToProps = dispatch => {
     return {
    
         onRenderingData: () => dispatch(actions.renderData())
+      
                 
     }
 }
