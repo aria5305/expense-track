@@ -34,7 +34,7 @@ class Expense extends Component{
 let inc = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading && this.props.expenseDetails === null){
+      if(!this.props.loading || this.props.expenseDetails === null){
           inc = 0
           inc = inc.toFixed(2)
 

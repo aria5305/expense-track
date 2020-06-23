@@ -121,6 +121,17 @@ export const postData = (id,data,type) => {
                 updates['/users/' + id + '/categories'] = data
             }
 
+            // if(type ==="deleteIncEntry"){
+            //     updates['/users/' + id + '/cash'] = data[0]
+            //     updates['/users/' + id + '/incomeDetails'] = data[1]
+
+            // }
+
+            // if(type ==="deleteExpEntry"){
+            //     updates['/users/' + id + '/cash'] = data[0]
+            //     updates['/users/' + id + '/expenseDetails'] = data[1]
+            // }
+
             return firebase.database().ref().update(updates).then( () => {
                 dispatch(postSuccess())
             })
@@ -166,50 +177,32 @@ export const renderData = () => {
         
 
 
-
-export const deleteIncomeEntry = (obj,item, currentYear,currentMonth) => {
+export const deleteIncomeEntry = (obj1,obj2) => {
    
-        let arr = [...obj[currentYear][currentMonth]]
-
-
-        const removeIndex = arr.indexOf(item);
-       
-
-        arr.splice(removeIndex,1);
-
-        let stateObj = {...obj, [currentYear]:{...obj[currentYear], [currentMonth]:arr}}; 
-
-      
+   
         return {
             type:actionTypes.DELETE_INCOME_ENTRY, 
-            incomeDetails:stateObj
+            incomeDetails:obj2,
+            cash:obj1
 
         }
      }
 
-export const updateDB = () => {
 
+
+export const deleteExpenseEntry = (obj1,obj2) => {
+   
     
-}
-export const deleteExpenseEntry = (obj,item, currentYear,currentMonth) => {
-   
-    let arr = [...obj[currentYear][currentMonth]]
-
-
-    const removeIndex = arr.indexOf(item);
-   
-
-    arr.splice(removeIndex,1);
-
-    let stateObj = {...obj, [currentYear]:{...obj[currentYear], [currentMonth]:arr}}; 
-
   
     return {
         type:actionTypes.DELETE_EXPENSE_ENTRY, 
-        expenseDetails:stateObj
+        expenseDetails:obj2,
+        cash:obj1
 
     }
  }
+
+
 
 export const deleteLabel  = (obj) => {
 
@@ -225,6 +218,9 @@ export const deleteLabel  = (obj) => {
                 label:obj
             }
 }
+
+
+
 
 export const addLabel = (obj,item,type) => {
     

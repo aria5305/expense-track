@@ -100,16 +100,23 @@ const deleteLabel = (state,action) => {
 const deleteExpenseEntry = (state,action) => {
 
     return updatedObject(state,{
-        expenseDetails:action.expenseDetails
+        expenseDetails:action.expenseDetails,
+        cash:action.cash
         
     })
 }
 
 const deleteIncomeEntry = (state,action) => {
     return updatedObject(state,{
-        incomeDetails:action.incomeDetails
+        incomeDetails:action.incomeDetails,
+        cash:action.cash
     })
 }
+
+const removeEntry = (action,state) => {
+    return state;
+}
+
 
 
 
@@ -131,6 +138,7 @@ const reducer = (state = initialState,action) => {
 
         case actionTypes.DELETE_INCOME_ENTRY:return deleteIncomeEntry(state,action)
         case actionTypes.DELETE_EXPENSE_ENTRY: return deleteExpenseEntry(state,action)
+        // case actionTypes.REMOVE_ENTRY_FROM_DB: return deleteExpenseEntry(state,action)
 
         case actionTypes.DELETE_LABEL: return deleteLabel(state,action);
         case actionTypes.ADD_LABEL: return addLabel(state,action)

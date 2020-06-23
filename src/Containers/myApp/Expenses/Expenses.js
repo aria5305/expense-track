@@ -34,7 +34,7 @@ class Expense extends Component{
 let exp = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading && this.props.expenseDetails === null){
+      if(!this.props.loading || this.props.expenseDetails === null){
         exp = 0
         exp = exp.toFixed(2)
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
