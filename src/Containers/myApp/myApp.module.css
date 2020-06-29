@@ -177,6 +177,7 @@
                 height: auto;
                 bottom: 0;
                 left: 0;
+                min-height: 0;
         }
 
         .list {
