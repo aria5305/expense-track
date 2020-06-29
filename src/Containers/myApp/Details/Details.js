@@ -407,15 +407,11 @@ class Details extends Component{
                     max: today}
                     
                 },
-                // labelSelect:{
-                //     ...this.state.controls.labelSelect,
-                //     elementConfig:{
-                //      ...this.state.controls.labelSelect.elementConfig,
-                //         options:this.props.labels,
-                //     }
-                // }
-                // where to update this instead? 
+              
             }
+           
+        this.setState({controls:updatedControl})
+
         
 
           

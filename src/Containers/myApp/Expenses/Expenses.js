@@ -31,7 +31,13 @@ class Expense extends Component{
     }  
 
     componentDidMount(){
-        let newArr = [] 
+        
+   
+        if(!this.props.error  && this.props.expenseDetails && this.props.expenseDetails[this.props.currentYear] && this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
+            let newArr = [] 
+
+        
+
         let incArr = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth];
            
            
@@ -64,6 +70,9 @@ class Expense extends Component{
         }
 
         this.setState({data:newArr})
+    }else{
+        return;
+    }
 
     }
     
@@ -72,7 +81,8 @@ class Expense extends Component{
         let exp = null; 
         let newArr = [];
         let list = null; 
-      if(!this.props.loading ){
+
+      if(this.props.error){
         exp = 0
         exp = exp.toFixed(2)
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
@@ -80,7 +90,7 @@ class Expense extends Component{
         // newArr = new Array (num); 
       
             
-        if(!this.props.expenseDetails){
+        }else if(!this.props.expenseDetails || this.props.error === "no data"){
             exp = 0
             exp = exp.toFixed(2)
         }
@@ -98,16 +108,9 @@ class Expense extends Component{
 
         
     
-    }else{
-             
-        exp= 0
-          exp= exp.toFixed(2)
+        }
+    
 
-
-   
-}
-}
-      
     return (
 
       <div className={classes.Graph}>
@@ -133,7 +136,8 @@ const mapStateToProps = state => {
         cash:state.details.cash,
         incomeDetails:state.details.incomeDetails,
         expenseDetails:state.details.expenseDetails,
-        loading:state.details.loading
+        loading:state.details.loading,
+        error:state.details.error
        
     }
 }

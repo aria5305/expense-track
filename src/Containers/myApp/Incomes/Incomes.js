@@ -30,6 +30,9 @@ class Expense extends Component{
     }  
 
     componentDidMount(){
+
+        if(!this.props.error  && this.props.incomeDetails && this.props.incomeDetails[this.props.currentYear] && this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
+            
         let newArr = [] 
         let incArr = this.props.incomeDetails[this.props.currentYear][this.props.currentMonth];
            
@@ -64,27 +67,29 @@ class Expense extends Component{
 
         this.setState({data:newArr})
 
-    }
-    
+        }else{
+            return;
+        }
+}
     
     render(){
 
 let inc = null; 
 let newArr = [];
 let list = null; 
-      if(!this.props.loading){
+    if(!this.props.loading){
           inc = 0
           inc = inc.toFixed(2)
 
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
  
         // newArr = new Array (num); 
+      
      
 
-    if(!this.props.incomeDetails){
-        inc = 0
-        inc = inc.toFixed(2)
-    }
+    if(!this.props.incomeDetails || !this.props.incomeDetails[this.props.currentYear] || !this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
+                inc = 0
+                inc = inc.toFixed(2)
     }else if(this.props.incomeDetails[this.props.currentYear][this.props.currentMonth]){
             
          inc = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].income).toFixed(2);
@@ -127,16 +132,10 @@ let list = null;
             
      
 
-        
+    }
     
-    }else{
-             
-         inc = 0
-            inc = inc.toFixed(2)
+    }
 
-
-    
-}
       
     return (
 
@@ -163,7 +162,8 @@ const mapStateToProps = state => {
         cash:state.details.cash,
         incomeDetails:state.details.incomeDetails,
         expenseDetails:state.details.expenseDetails,
-        loading:state.details.loading
+        loading:state.details.loading,
+        error:state.details.error
        
     }
 }
