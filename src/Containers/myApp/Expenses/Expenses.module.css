@@ -4,8 +4,12 @@
         align-items: center;
         justify-content: center;
         margin-top: 2rem;
+        min-height: 40rem;
 }
 
+.Donut svg {
+        height: 20rem;
+}
 .heading {
         color: var(--orange);
         font-weight: 300;

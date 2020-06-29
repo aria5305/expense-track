@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './input.module.css';
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxillary'
 const input = ( props ) => {
     let inputElement = null;
     const inputClasses = [classes.InputElement];

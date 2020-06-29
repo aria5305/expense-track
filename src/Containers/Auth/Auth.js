@@ -6,7 +6,7 @@ import {checkValidity} from '../../share/utility';
 import {Redirect} from 'react-router-dom';
 import * as actions from '../../store/action/index';
 import {connect} from 'react-redux';
-import Aux from '../../hoc/Aux'
+import Aux from '../../hoc/Auxillary'
 import Spinner from '../../Components/UI/spinner/spinner'
 
 

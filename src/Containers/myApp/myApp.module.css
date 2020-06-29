@@ -11,6 +11,7 @@
         flex-direction: column;
         padding-top: 2rem;
         padding-left: 0.5rem;
+        min-height: 100vh;
         height: 100%;
 }
 .right {
@@ -19,6 +20,7 @@
         border-left: none;
         padding: 0.5rem;
         padding-top: 1rem;
+
         text-align: center;
 }
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import classes from './about.module.css';
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Auxillary';
 import image from '../../assets/images/undraw_next_tasks_iubr.svg'
 import image2 from '../../assets/images/undraw_studying_s3l7.svg'
 import {FontAwesomeIcon } from '@fortawesome/react-fontawesome';

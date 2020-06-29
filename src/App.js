@@ -13,8 +13,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 
 import {faSignOutAlt, faIdCardAlt,faMoneyCheckAlt, faTrash,faWallet,faUserPlus, 
   faPlaneDeparture,faFrog,faCogs,faList ,faMoneyBillAlt,faPiggyBank,faTags,faIgloo,
-faEnvelopeSquare,faBox,faSignInAlt} from '@fortawesome/free-solid-svg-icons'
-import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+faEnvelopeSquare,faBox,faSignInAlt,} from '@fortawesome/free-solid-svg-icons'
+
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import MyAccount from './Containers/myAccount/myAccount';
 
@@ -37,7 +37,7 @@ const asyncMyAccount =  asyncComponent(()=> {
 
 // import {connect} from 'react-redux';
 
-library.add(faSignOutAlt,faIdCardAlt,faMoneyCheckAlt,faBox,faSignInAlt,faIgloo,faEnvelopeSquare,faMoneyBillAlt,faPiggyBank,faTags,faList,faWallet,faUserPlus,faPlaneDeparture,faFrog,faGoogle,faCogs,faTrash) 
+library.add(faSignOutAlt,faIdCardAlt,faMoneyCheckAlt,faBox,faSignInAlt,faIgloo,faEnvelopeSquare,faMoneyBillAlt,faPiggyBank,faTags,faList,faWallet,faUserPlus,faPlaneDeparture,faFrog,faCogs,faTrash) 
 
 
 

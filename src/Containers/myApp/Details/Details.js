@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxillary'
 import classes from './Details.module.css';
 import Input from '../../../Components/UI/input/input';
 import {checkValidity} from '../../../share/utility'
 import Button from '../../../Components/UI/button/button'
 import {connect} from 'react-redux';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'; 
 import * as actions from '../../../store/action/index';
 
 import "firebase/database"
@@ -93,9 +94,16 @@ class Details extends Component{
 
     inputChangedHandler = (event,controlName) => {
 
-        console.log(event.target.value, controlName);
         const updatedControlElement = this.state.controls[controlName];
    
+        if(controlName ==="select"){
+            if (event.target.value === "-"){
+                this.setState({selectLabel:this.props.labels.expense[0].value})
+            }else if(event.target.value === "+"){
+                this.setState({selectLabel:this.props.labels.income[0].value})
+            };
+        }
+
       if(controlName ==="selectLabel"){
     
         this.setState({selectLabel:event.target.value})
@@ -112,16 +120,14 @@ class Details extends Component{
         }
         this.setState({controls:updatedControl})
     }
-
-    console.log(this.state)
-
       
 
             
 
     }
 
- 
+    
+
 
   
     recordDetails = (event) => {
@@ -164,12 +170,11 @@ class Details extends Component{
 
         this.setState({controls:updatedControl})
 
-        console.log(updatedControl.date);
             
 
         if(formElementsObj.select === "-"){
             let newArr = this.expenseCalc(formElementsObj.amount,formElementsObj,this.props.currentMonth,this.props.currentYear)
-            console.log(newArr)
+        
             this.props.onAddExpense(newArr[0],newArr[1])
             this.props.onPostData(this.props.localId,newArr,"expense");
           
@@ -177,12 +182,7 @@ class Details extends Component{
         }else if(formElementsObj.select ==="+"){
             let newArr = this.incomeCal(formElementsObj.amount, formElementsObj,this.props.currentMonth,this.props.currentYear)
             this.props.onAddIncome(newArr[0], newArr[1])
-           
-            this.props.onPostData(this.props.localId,newArr,"income");
-
-   
-            
-           
+            this.props.onPostData(this.props.localId,newArr,"income");   
         }
 
         
@@ -191,28 +191,76 @@ class Details extends Component{
 
     }
 
+    deleteEntry = (cashObj, desObj,item, currentYear,currentMonth,category) => {
+
+        if(category === "income"){
+            let incArr = [...desObj[currentYear][currentMonth]]
+
+            let cashArr = {...cashObj, 
+                [currentYear]:{
+                    ...cashObj[currentYear], 
+                    [currentMonth]:
+                    {...cashObj[currentYear][currentMonth],
+                        "income": parseInt(cashObj[currentYear][currentMonth].income - item.amount)
+                    }}}
+        
+            const removeIndex = incArr.indexOf(item);
+           
+            incArr.splice(removeIndex,1);
+        
+            let stateObj = {...desObj, [currentYear]:{...desObj[currentYear], [currentMonth]:incArr}}; 
+        
+              return [cashArr,stateObj]
+
+            
+        }else if(category ==="expense") {
+
+        
+
+            let incArr = [...desObj[currentYear][currentMonth]]
+            let cashArr = {...cashObj, 
+                [currentYear]:{
+                    ...cashObj[currentYear], 
+                    [currentMonth]:
+                    {...cashObj[currentYear][currentMonth],
+                        "expense": parseInt(cashObj[currentYear][currentMonth].expense - item.amount)
+                    }}}
+        
+            const removeIndex = incArr.indexOf(item);
+           
+            incArr.splice(removeIndex,1);
+        
+            let stateObj = {...desObj, [currentYear]:{...desObj[currentYear], [currentMonth]:incArr}}; 
+        
+              return [cashArr,stateObj]
+             
+        }
+
+    }
+
+  
+
     expenseCalc = (expense,expenseDetails,currentMonth,currentYear) => {
         let expenseDe;
         let monthDetails = []; 
        
-        console.log(this.props.cash ,"state");
     
     
         if(!this.props.cash[currentYear]){
             expenseDe = {[currentYear]:{[currentMonth]:{"expense":parseInt(expense)}}}
-            console.log(expenseDe,"frist")
+          
         }else if(!this.props.cash[currentYear][currentMonth]){
             expenseDe = {[currentYear]:{...this.props.cash[currentYear],
                 [currentMonth]:{"expense":parseInt(expense)}}}
-            console.log(expenseDe,"second= new month ")
+          
         }
         else if(this.props.cash[currentYear][currentMonth].expense){
                 let newExpense = parseInt(this.props.cash[currentYear][currentMonth].expense) + parseInt(expense);
                 expenseDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"expense": newExpense}}}
-                console.log(expenseDe,"second")
+               
         }else if(!this.props.cash[currentYear][currentMonth].expense){
             expenseDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"expense": parseInt(expense)}}}
-            console.log(expenseDe,"second")
+           
         }  else{
             expenseDe=null;
         }
@@ -264,24 +312,24 @@ class Details extends Component{
         let incomeDe;
         let monthDetails = []; 
    
-    console.log(this.props.cash ,"this.props");
+ 
 
 
     if(!this.props.cash[currentYear]){
         incomeDe = {[currentYear]:{[currentMonth]:{"income":income}}}
-        console.log(incomeDe,"frist")
+      
     }else if(!this.props.cash[currentYear][currentMonth]){
         incomeDe = {[currentYear]:{...this.props.cash[currentYear],
             [currentMonth]:{"income":parseInt(income)}}}
-        console.log(incomeDe,"second= new month ")
+        
     }
     else if(this.props.cash[currentYear][currentMonth].income){
            let newIncome = parseInt(this.props.cash[currentYear][currentMonth].income) + parseInt(income);
             incomeDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"income": newIncome}}}
-            console.log(incomeDe,"second")
+          
     }else if(!this.props.cash[currentYear][currentMonth].income){
         incomeDe= {[currentYear]:{...this.props.cash[currentYear],[currentMonth]:{...this.props.cash[currentYear][currentMonth],"income": parseInt(income)}}}
-        console.log(incomeDe,"second")
+     
     }else{
         incomeDe= null;
     }
@@ -332,8 +380,9 @@ class Details extends Component{
     }
     
         return [incomeDe,yearObj]
-}
+    }
 
+  
 
 
     componentDidMount(){
@@ -369,15 +418,11 @@ class Details extends Component{
             }
         
 
-            console.log(updatedControl,"updatedcontrol for state"); 
-
-            this.setState({controls:updatedControl})
           
 
-    
+         
     }
-    
-
+ 
      
 
    
@@ -408,18 +453,27 @@ class Details extends Component{
 
         }
         if(this.state.controls.select.value === "+") {
+          
             label =   <Input 
               elementType="select"
               elementConfig={{"type":"select",options:this.props.labels.income}}
+              value={this.props.labels.income[0]}
               style={{margin:".5rem",width:"15rem"}}
-              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+              changed={
+                  (event) => {this.inputChangedHandler(event, "selectLabel")}}/>
+              
         }
         else if(this.state.controls.select.value === "-"){
+           
               label = <Input 
               elementType="select"
               elementConfig={{"type":"select",options:this.props.labels.expense}}
+              value={this.props.labels.expense[0]}
               style={{margin:".5rem",width:"15rem"}}
-              changed={(event) => this.inputChangedHandler(event, "selectLabel")}/>
+              changed={(event) => {
+                  this.inputChangedHandler(event, "selectLabel")}} />
+
+             
           }
       
     }
@@ -434,7 +488,6 @@ class Details extends Component{
             })
         }
 
-        console.log(formElementsArray);
         let form = formElementsArray.map(formElement => {
 
             
@@ -467,7 +520,16 @@ class Details extends Component{
                 incomeList = (
                     this.props.incomeDetails[this.props.currentYear][this.props.currentMonth].map((inc,id) => {
                 
-                        return <li key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p></li>
+                    
+                        return <li className={classes.items} key={id}><p>{inc.details}<span className={classes.smallLabel}>{inc.labelSelect ? inc.labelSelect: "income"}</span></p><p>${inc.amount}</p> 
+                        <FontAwesomeIcon  className={classes.icon}icon="trash" 
+                        onClick={() => {
+                           let arr =  this.deleteEntry(this.props.cash,this.props.incomeDetails,inc,this.props.currentYear,this.props.currentMonth,"income")
+                            this.props.onDeleteIncEntry(arr[0],arr[1])
+                           this.props.onPostData(this.props.localId,arr,"income");
+                         
+
+                        }}></FontAwesomeIcon></li>
                     })
                 )
                 }
@@ -482,7 +544,19 @@ class Details extends Component{
                 if( this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
                             expenseList = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth].map((exp,id) => {
                                 
-                            return <li key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p></li>
+                            return <li className={classes.items}  key={id}><p>{exp.details} <span className={classes.smallLabel}>{exp.labelSelect ? exp.labelSelect: "expense"}</span></p><p>${exp.amount}</p> 
+                            <FontAwesomeIcon className={classes.icon} icon="trash"  
+                            onClick={()=>
+                                {
+                                    let arr = this.deleteEntry(this.props.cash,this.props.expenseDetails,exp,this.props.currentYear,this.props.currentMonth,"expense")
+
+                                    this.props.onDeleteExpEntry(arr[0], arr[1])
+
+                               
+                                   this.props.onPostData(this.props.localId,arr,"expense");
+                                 
+                                 
+                                }}></FontAwesomeIcon></li>
                 })
             
             }
@@ -553,7 +627,9 @@ const mapDispatchToProps = dispatch => {
         onAddIncome: (income,data) => dispatch(actions.addIncome(income,data)),
         onAddExpense: (expense,data) => dispatch(actions.addExpense(expense,data)),
         onPostData: (id,data,type) => dispatch(actions.postData(id,data,type)),
-        onRenderingData: () => dispatch(actions.renderData())
+        onRenderingData: () => dispatch(actions.renderData()),
+        onDeleteExpEntry: (obj1, obj2) => dispatch(actions.deleteExpenseEntry(obj1,obj2)),
+        onDeleteIncEntry: (obj1,obj2) => dispatch(actions.deleteIncomeEntry(obj1,obj2))
                 
     }
 }

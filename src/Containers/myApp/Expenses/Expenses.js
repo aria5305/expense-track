@@ -14,6 +14,7 @@ class Expense extends Component{
         super(props)
         this.state = {
             data: [],
+
            
             
         }
@@ -28,13 +29,50 @@ class Expense extends Component{
         return new Date(year,month,0).getDate()
         
     }  
+
+    componentDidMount(){
+        let newArr = [] 
+        let incArr = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth];
+           
+           
+         
+        let newObj = incArr.reduce((obj,item) => {
+
+            if(!obj[item.labelSelect]){
+            obj[item.labelSelect] = { amount:parseInt(item.amount)}
+            
+            }else{
+            
+                obj[item.labelSelect].amount += parseInt(item.amount)
+            }
+       
+            return obj;
+
+        },{})
+
+
+        //calculate angle
+        
+        //calculate angle
+        let totalAmount = 0;
+        for(let key in newObj) {
+            
+            totalAmount += parseInt(newObj[key].amount); 
+          
+        
+            newArr.push({angle:((newObj[key].amount/totalAmount) * 100), label:key+ " "+ newObj[key].amount.toFixed(2)})
+        }
+
+        this.setState({data:newArr})
+
+    }
     
     render(){
 
-let exp = null; 
-let newArr = [];
-let list = null; 
-      if(!this.props.loading && this.props.expenseDetails === null){
+        let exp = null; 
+        let newArr = [];
+        let list = null; 
+      if(!this.props.loading ){
         exp = 0
         exp = exp.toFixed(2)
         // let num = this.daysInMonth(this.props.currentMonthIndex, this.props.currentYear); 
@@ -42,52 +80,32 @@ let list = null;
         // newArr = new Array (num); 
       
             
-
-        if(this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
+        if(!this.props.expenseDetails){
+            exp = 0
+            exp = exp.toFixed(2)
+        }
+        else if(this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
             
          exp = parseInt(this.props.cash[this.props.currentYear][this.props.currentMonth].expense).toFixed(2);
-            let incArr = this.props.expenseDetails[this.props.currentYear][this.props.currentMonth];
            
-           
-         
-            let newObj = incArr.reduce((obj,item) => {
 
-                if(!obj[item.labelSelect]){
-                obj[item.labelSelect] = { amount:parseInt(item.amount)}
-                
-                }else{
-                
-                    obj[item.labelSelect].amount += parseInt(item.amount)
-                }
-           
-                return obj;
-
-            },{})
-
-
-            //calculate angle
-            
-            //calculate angle
-            let totalAmount = 0;
-            for(let key in newObj) {
-                
-                totalAmount += parseInt(newObj[key].amount); 
-              
-            
-                newArr.push({angle:((newObj[key].amount/totalAmount) * 100), label:key+ " "+ newObj[key].amount.toFixed(2)})
-            }
-
-            list = newArr.map(item => {
+            list = this.state.data.map(item => {
               return <li key={item.label} className={classes.listItem}> {item.label}</li>
 
                
             })
-            console.log(newObj,newArr);
-     
+           
 
         
     
-    }
+    }else{
+             
+        exp= 0
+          exp= exp.toFixed(2)
+
+
+   
+}
 }
       
     return (
@@ -96,7 +114,7 @@ let list = null;
             <h1 className={classes.heading}>Total Expenses this month:{exp}</h1>
   
         <div className={classes.Flex}>
-            <RadialChart className={classes.Donut}innerRadius={95} labelsStyle={{fontSize:17}} subLabelsStyle={{fontSize:15}} radius={145} data ={newArr} height={300} width={400} showLabels></RadialChart>
+            <RadialChart className={classes.Donut}innerRadius={95} labelsStyle={{fontSize:17}} subLabelsStyle={{fontSize:15}} radius={145} data ={this.state.data} height={300} width={400} showLabels></RadialChart>
             <div className={classes.listContainer}>
                 <h3 className={classes.subheading}>List of Expense</h3>
                 <ul className={classes.list}>

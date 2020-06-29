@@ -42,10 +42,25 @@
         margin-bottom: 5rem;
 }
 
+.icon {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.7rem;
+        color: #aaa;
+        /* top: 0; */
+        cursor: pointer;
+        transition: all 0.2s;
+}
+
+.icon:hover {
+        color: var(--red);
+}
+
 .list li {
         display: flex;
+        position: relative;
         justify-content: space-between;
-        padding: 0.5rem 1rem;
+        padding: 0.5rem 2rem 0.5rem 1rem;
 }
 
 .list li:nth-of-type(even) {

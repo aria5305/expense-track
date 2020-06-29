@@ -121,6 +121,17 @@ export const postData = (id,data,type) => {
                 updates['/users/' + id + '/categories'] = data
             }
 
+            // if(type ==="deleteIncEntry"){
+            //     updates['/users/' + id + '/cash'] = data[0]
+            //     updates['/users/' + id + '/incomeDetails'] = data[1]
+
+            // }
+
+            // if(type ==="deleteExpEntry"){
+            //     updates['/users/' + id + '/cash'] = data[0]
+            //     updates['/users/' + id + '/expenseDetails'] = data[1]
+            // }
+
             return firebase.database().ref().update(updates).then( () => {
                 dispatch(postSuccess())
             })
@@ -132,19 +143,7 @@ export const postData = (id,data,type) => {
   
 }
 
-// const initialRender = () => {
 
-
-//     return {
-//         type:actionTypes.INITIAL_RENDER
-//         cash:cash,
-//         incomeDetails:incomeDetails,
-//         expenseDetails:expenseDetails,
-//         labels:labels,
-      
-//     };
-
-// }
 
 export const clearState  = () => {
 return {
@@ -173,23 +172,37 @@ export const renderData = () => {
                         dispatch(fetchFailed())
                  }
                 })
-        // }).catch(error => {
-        //     dispatch(fetchFailed(error))
-        //     console.log(error)
-        // })
-      
-        //    }else{
-        //        dispatch(fetchFailed())
-           }
-        // })
+            }
     }
         
 
 
+export const deleteIncomeEntry = (obj1,obj2) => {
+   
+   
+        return {
+            type:actionTypes.DELETE_INCOME_ENTRY, 
+            incomeDetails:obj2,
+            cash:obj1
+
+        }
+     }
 
 
-// }
-// }
+
+export const deleteExpenseEntry = (obj1,obj2) => {
+   
+    
+  
+    return {
+        type:actionTypes.DELETE_EXPENSE_ENTRY, 
+        expenseDetails:obj2,
+        cash:obj1
+
+    }
+ }
+
+
 
 export const deleteLabel  = (obj) => {
 
@@ -205,6 +218,9 @@ export const deleteLabel  = (obj) => {
                 label:obj
             }
 }
+
+
+
 
 export const addLabel = (obj,item,type) => {
     
