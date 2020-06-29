@@ -33,7 +33,7 @@ class Expense extends Component{
     componentDidMount(){
         
    
-        if(!this.props.error  && this.props.expenseDetails && this.props.expenseDetails[this.props.currentYear] && this.props.expenseDetails[this.props.currentYear][this.props.currentMonth]){
+        if(!this.props.error  ||( this.props.expenseDetails && this.props.expenseDetails[this.props.currentYear] && this.props.expenseDetails[this.props.currentYear][this.props.currentMonth])){
             let newArr = [] 
 
         

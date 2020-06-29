@@ -105,8 +105,8 @@ class Details extends Component{
         }
 
       if(controlName ==="selectLabel"){
-    
         this.setState({selectLabel:event.target.value})
+
       }else{
 
         const updatedControl = {
@@ -453,10 +453,13 @@ class Details extends Component{
             label =   <Input 
               elementType="select"
               elementConfig={{"type":"select",options:this.props.labels.income}}
-              value={this.props.labels.income[0]}
+            //
               style={{margin:".5rem",width:"15rem"}}
               changed={
-                  (event) => {this.inputChangedHandler(event, "selectLabel")}}/>
+             
+                  (event) => {
+                      this.inputChangedHandler(event, "selectLabel")
+                    }}/>
               
         }
         else if(this.state.controls.select.value === "-"){
@@ -464,9 +467,10 @@ class Details extends Component{
               label = <Input 
               elementType="select"
               elementConfig={{"type":"select",options:this.props.labels.expense}}
-              value={this.props.labels.expense[0]}
+         
               style={{margin:".5rem",width:"15rem"}}
-              changed={(event) => {
+              changed={
+                (event) =>{
                   this.inputChangedHandler(event, "selectLabel")}} />
 
              
