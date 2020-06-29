@@ -12,6 +12,7 @@
 .btn:disabled:hover,
 .btn:disabled {
         background-color: white;
+
         color: gray;
         cursor: not-allowed;
 }

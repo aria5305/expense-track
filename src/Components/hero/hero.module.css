@@ -18,6 +18,9 @@
         color: white;
         padding: 2rem;
 }
+.link:hover {
+        color: var(--red);
+}
 .heading {
         color: white;
 
