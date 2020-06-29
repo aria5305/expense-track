@@ -173,6 +173,7 @@
         .left {
                 position: fixed;
                 z-index: 200;
+                min-height: 0;
                 width: 100vw;
                 height: auto;
                 bottom: 0;
